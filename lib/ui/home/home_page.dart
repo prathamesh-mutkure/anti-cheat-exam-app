@@ -8,27 +8,27 @@ import 'package:provider/provider.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
 
+  logout(BuildContext context) {
+    context.read<StudentStore>().logout();
+    Navigator.pushReplacementNamed(context, Routes.login);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Welcome"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () => logout(context),
+          )
+        ],
+      ),
       body: Container(
         width: double.infinity,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Home"),
-            TextButton(
-              onPressed: () {
-                context.read<StudentStore>().logout();
-                Navigator.pushReplacementNamed(context, Routes.login);
-              },
-              child: Text("Logout"),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                elevation: MaterialStateProperty.all(1.0),
-              ),
-            ),
-          ],
+          children: [],
         ),
       ),
     );
