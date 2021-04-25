@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:anti_cheat_exam_app/models/Student.dart';
+import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/routes.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:flutter/material.dart';
@@ -16,21 +18,43 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Welcome"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () => logout(context),
-          )
-        ],
-      ),
-      body: Container(
-        width: double.infinity,
-        child: Column(
-          children: [],
+      appBar: _buildAppBar(context),
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            children: [
+              _buildExamCards(),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(context) {
+    return AppBar(
+      title: Text("Welcome"),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.logout),
+          onPressed: () => logout(context),
+        )
+      ],
+    );
+  }
+
+  _buildExamCards() {
+    return Column(
+      children: Student.getDummyStudent().assignedExams.map(
+        (Exam exam) {
+          return ListTile(
+            title: Text(exam.name),
+            subtitle: Text(exam.code),
+            trailing: Text(exam.dateTime.toString()),
+          );
+        },
+      ).toList(),
     );
   }
 }
