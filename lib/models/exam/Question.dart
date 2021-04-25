@@ -8,4 +8,16 @@ class Question {
     @required this.title,
     @required this.options,
   });
+
+  factory Question.getDummyQuestion() {
+    return Question(
+      title: "What is the sum of a and b",
+      options: {
+        'A': 'a+b',
+        'B': 'ab',
+        'C': 'ba',
+        'D': 'None of the Above',
+      },
+    );
+  }
 }

@@ -13,4 +13,17 @@ class Exam {
     @required this.dateTime,
     @required this.questions,
   });
+
+  factory Exam.getDummyExam() {
+    return Exam(
+      code: "12345",
+      name: "Maths",
+      dateTime: new DateTime.now(),
+      questions: [
+        Question.getDummyQuestion(),
+        Question.getDummyQuestion(),
+        Question.getDummyQuestion(),
+      ],
+    );
+  }
 }
