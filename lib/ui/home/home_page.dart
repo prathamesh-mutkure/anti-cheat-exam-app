@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:anti_cheat_exam_app/models/Student.dart';
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/routes.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
+import 'package:anti_cheat_exam_app/ui/exam/exam_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +23,7 @@ class HomePage extends StatelessWidget {
           width: double.infinity,
           child: Column(
             children: [
-              _buildExamCards(),
+              _buildExamCards(context),
             ],
           ),
         ),
@@ -44,7 +43,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _buildExamCards() {
+  _buildExamCards(context) {
     return Column(
       children: Student.getDummyStudent().assignedExams.map(
         (Exam exam) {
@@ -52,6 +51,12 @@ class HomePage extends StatelessWidget {
             title: Text(exam.name),
             subtitle: Text(exam.code),
             trailing: Text(exam.dateTime.toString()),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ExamPage(exam: exam)),
+              );
+            },
           );
         },
       ).toList(),
