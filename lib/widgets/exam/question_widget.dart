@@ -3,24 +3,29 @@ import 'package:flutter/material.dart';
 
 class QuestionWidget extends StatefulWidget {
   final Question question;
+  final int questionNo;
 
-  QuestionWidget({@required this.question});
+  QuestionWidget({
+    @required this.question,
+    @required this.questionNo,
+  });
 
   @override
-  _QuestionWidgetState createState() =>
-      _QuestionWidgetState(question: question);
+  _QuestionWidgetState createState() => _QuestionWidgetState(
+        question: question,
+        questionNo: questionNo,
+      );
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
   final Question question;
+  final int questionNo;
   String chosenOptionKey;
 
-  _QuestionWidgetState({@required this.question});
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  _QuestionWidgetState({
+    @required this.question,
+    @required this.questionNo,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Question 1: '),
+            Text('Question $questionNo: '),
             Text(question.title),
             ..._buildOptions(),
           ],
