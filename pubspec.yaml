@@ -19,7 +19,6 @@ dependencies:
   mobx: ^2.0.1
   flutter_mobx: ^2.0.0
   provider: ^5.0.0
-
   dio: ^4.0.0
 
 dev_dependencies:
@@ -31,3 +30,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Roboto-Medium
+      fonts:
+        - asset: assets/fonts/Roboto-Medium.ttf
+
