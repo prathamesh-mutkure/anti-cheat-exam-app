@@ -11,7 +11,19 @@ class Question {
 
   factory Question.getDummyQuestion() {
     return Question(
-      title: "What is the sum of a and b",
+      title: "1. What is the sum of a and b",
+      options: {
+        'A': 'a+b',
+        'B': 'ab',
+        'C': 'ba',
+        'D': 'None of the Above',
+      },
+    );
+  }
+
+  factory Question.getDummyQuestion2() {
+    return Question(
+      title: "2. What is the sum of a and b",
       options: {
         'A': 'a+b',
         'B': 'ab',

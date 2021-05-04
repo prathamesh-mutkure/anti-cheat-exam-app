@@ -21,7 +21,7 @@ class Exam {
       dateTime: new DateTime.now(),
       questions: [
         Question.getDummyQuestion(),
-        Question.getDummyQuestion(),
+        Question.getDummyQuestion2(),
         Question.getDummyQuestion(),
       ],
     );
