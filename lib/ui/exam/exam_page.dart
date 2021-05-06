@@ -1,10 +1,8 @@
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
-import 'package:anti_cheat_exam_app/stores/exam/counter_store.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class ExamPage extends StatefulWidget {
@@ -19,7 +17,6 @@ class _ExamPageState extends State<ExamPage> {
   @override
   Widget build(BuildContext context) {
     exam = context.watch<ExamStore>().currentExam;
-    currentQuestion = context.watch<ExamStore>().currentQuestionNo;
 
     return Scaffold(
       appBar: _buildAppBar(),
@@ -27,12 +24,7 @@ class _ExamPageState extends State<ExamPage> {
         child: Container(
           child: Column(
             children: [
-              Observer(
-                builder: (context) => QuestionWidget(
-                  questionNo: context.watch<ExamStore>().currentQuestionNo + 1,
-                  question: context.watch<ExamStore>().currentQuestion,
-                ),
-              ),
+              QuestionWidget(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -48,18 +40,6 @@ class _ExamPageState extends State<ExamPage> {
                     onPressed: () {
                       context.read<ExamStore>().goToNextQuestion();
                     },
-                  ),
-                  SizedBox(width: 20),
-                  Observer(
-                    builder: (context) => ExamButton(
-                      text: context
-                          .watch<ExamStore>()
-                          .currentQuestionNo
-                          .toString(),
-                      onPressed: () {
-                        context.read<CounterStore>().increment();
-                      },
-                    ),
                   ),
                 ],
               ),

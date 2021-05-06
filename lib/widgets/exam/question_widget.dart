@@ -1,33 +1,16 @@
 import 'package:anti_cheat_exam_app/models/exam/Question.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class QuestionWidget extends StatefulWidget {
-  final Question? question;
-  final int? questionNo;
-
-  QuestionWidget({
-    required this.question,
-    required this.questionNo,
-  });
-
   @override
-  _QuestionWidgetState createState() => _QuestionWidgetState(
-        question: question,
-        questionNo: questionNo,
-      );
+  _QuestionWidgetState createState() => _QuestionWidgetState();
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
-  final Question? question;
-  final int? questionNo;
   String? chosenOptionKey;
-
-  _QuestionWidgetState({
-    required this.question,
-    required this.questionNo,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +18,16 @@ class _QuestionWidgetState extends State<QuestionWidget> {
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Container(
         padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-                'Question ${context.watch<ExamStore>().currentQuestionNo + 1}: '),
-            Text(context.watch<ExamStore>().currentQuestion!.title),
-            ..._buildOptions(context.watch<ExamStore>().currentQuestion!),
-          ],
+        child: Observer(
+          builder: (context) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  'Question ${context.watch<ExamStore>().currentQuestionNo + 1}: '),
+              Text(context.watch<ExamStore>().currentQuestion!.title),
+              ..._buildOptions(context.watch<ExamStore>().currentQuestion!),
+            ],
+          ),
         ),
       ),
     );
