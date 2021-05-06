@@ -10,6 +10,10 @@ class ExamCard extends StatelessWidget {
     required this.exam,
   });
 
+  onStartExamTapped(BuildContext context) {
+    context.read<ExamStore>().startExam(exam, context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -150,8 +154,7 @@ class ExamCard extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      context.read<ExamStore>().startExam(exam, context);
-                      context.read<ExamStore>().startExam(exam, context);
+                      onStartExamTapped(context);
                     },
                     child: Container(
                       height: 40,

@@ -44,12 +44,15 @@ abstract class _ExamStore with Store {
   @action
   goToNextQuestion() {
     if (currentQuestionNo != totalQuestions! - 1) currentQuestionNo++;
-    print(currentQuestionNo);
   }
 
   @action
   goToPreviousQuestion() {
     if (currentQuestionNo != 0) currentQuestionNo--;
-    print(currentQuestionNo);
+  }
+
+  @action
+  goToQuestion(int quesNo) {
+    currentQuestionNo = quesNo;
   }
 }

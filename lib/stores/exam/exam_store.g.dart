@@ -94,6 +94,17 @@ mixin _$ExamStore on _ExamStore, Store {
   }
 
   @override
+  dynamic goToQuestion(int quesNo) {
+    final _$actionInfo = _$_ExamStoreActionController.startAction(
+        name: '_ExamStore.goToQuestion');
+    try {
+      return super.goToQuestion(quesNo);
+    } finally {
+      _$_ExamStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentQuestionNo: ${currentQuestionNo},
