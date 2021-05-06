@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomProgressIndicatorWidget extends StatelessWidget {
   const CustomProgressIndicatorWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -27,8 +27,7 @@ class CustomProgressIndicatorWidget extends StatelessWidget {
             ),
           ),
         ),
-        decoration: BoxDecoration(
-            color: Color.fromARGB(100, 105, 105, 105)),
+        decoration: BoxDecoration(color: Color.fromARGB(100, 105, 105, 105)),
       ),
     );
   }

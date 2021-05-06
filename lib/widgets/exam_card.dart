@@ -7,7 +7,7 @@ class ExamCard extends StatelessWidget {
   final Exam exam;
 
   ExamCard({
-    @required this.exam,
+    required this.exam,
   });
 
   @override
@@ -150,6 +150,7 @@ class ExamCard extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      context.read<ExamStore>().startExam(exam, context);
                       context.read<ExamStore>().startExam(exam, context);
                     },
                     child: Container(

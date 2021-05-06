@@ -1,8 +1,10 @@
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
+import 'package:anti_cheat_exam_app/stores/exam/counter_store.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class ExamPage extends StatefulWidget {
@@ -11,8 +13,8 @@ class ExamPage extends StatefulWidget {
 }
 
 class _ExamPageState extends State<ExamPage> {
-  Exam exam;
-  int currentQuestion;
+  Exam? exam;
+  int? currentQuestion;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +27,11 @@ class _ExamPageState extends State<ExamPage> {
         child: Container(
           child: Column(
             children: [
-              QuestionWidget(
-                question: exam
-                    .questions[context.watch<ExamStore>().currentQuestionNo],
-                questionNo: context.watch<ExamStore>().currentQuestionNo + 1,
+              Observer(
+                builder: (context) => QuestionWidget(
+                  questionNo: context.watch<ExamStore>().currentQuestionNo + 1,
+                  question: context.watch<ExamStore>().currentQuestion,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -46,6 +49,18 @@ class _ExamPageState extends State<ExamPage> {
                       context.read<ExamStore>().goToNextQuestion();
                     },
                   ),
+                  SizedBox(width: 20),
+                  Observer(
+                    builder: (context) => ExamButton(
+                      text: context
+                          .watch<ExamStore>()
+                          .currentQuestionNo
+                          .toString(),
+                      onPressed: () {
+                        context.read<CounterStore>().increment();
+                      },
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -57,7 +72,7 @@ class _ExamPageState extends State<ExamPage> {
 
   _buildAppBar() {
     return AppBar(
-      title: Text(exam.name),
+      title: Text(exam!.name),
     );
   }
 }

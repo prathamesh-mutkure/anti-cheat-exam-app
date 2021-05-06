@@ -6,7 +6,7 @@ class StudentStore = _StudentStore with _$StudentStore;
 
 abstract class _StudentStore with Store {
   @observable
-  bool isLoggedIn;
+  bool isLoggedIn = false;
 
   _StudentStore() {
     isLoggedIn = false;

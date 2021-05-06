@@ -3,7 +3,7 @@ import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   _loginPresses(context) {
     StudentStore().login();

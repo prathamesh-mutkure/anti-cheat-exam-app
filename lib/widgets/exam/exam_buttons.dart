@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 
 class ExamButton extends StatelessWidget {
   final text;
-  final Function onPressed;
+  final void Function() onPressed;
 
-  ExamButton({@required this.text, @required this.onPressed});
+  ExamButton({
+    required this.text,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

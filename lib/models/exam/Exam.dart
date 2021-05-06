@@ -1,5 +1,4 @@
 import 'package:anti_cheat_exam_app/models/exam/Question.dart';
-import 'package:flutter/material.dart';
 
 class Exam {
   final String code;
@@ -8,10 +7,10 @@ class Exam {
   final List<Question> questions;
 
   Exam({
-    @required this.code,
-    @required this.name,
-    @required this.dateTime,
-    @required this.questions,
+    required this.code,
+    required this.name,
+    required this.dateTime,
+    required this.questions,
   });
 
   factory Exam.getDummyExam() {

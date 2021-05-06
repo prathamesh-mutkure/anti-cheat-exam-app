@@ -9,16 +9,24 @@ part of 'exam_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ExamStore on _ExamStore, Store {
+  Computed<Question?>? _$currentQuestionComputed;
+
+  @override
+  Question? get currentQuestion => (_$currentQuestionComputed ??=
+          Computed<Question?>(() => super.currentQuestion,
+              name: '_ExamStore.currentQuestion'))
+      .value;
+
   final _$_currentExamAtom = Atom(name: '_ExamStore._currentExam');
 
   @override
-  Exam get _currentExam {
+  Exam? get _currentExam {
     _$_currentExamAtom.reportRead();
     return super._currentExam;
   }
 
   @override
-  set _currentExam(Exam value) {
+  set _currentExam(Exam? value) {
     _$_currentExamAtom.reportWrite(value, super._currentExam, () {
       super._currentExam = value;
     });
@@ -88,7 +96,8 @@ mixin _$ExamStore on _ExamStore, Store {
   @override
   String toString() {
     return '''
-currentQuestionNo: ${currentQuestionNo}
+currentQuestionNo: ${currentQuestionNo},
+currentQuestion: ${currentQuestion}
     ''';
   }
 }

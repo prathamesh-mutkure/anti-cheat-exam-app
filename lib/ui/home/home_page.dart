@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   logout(BuildContext context) {
     context.read<StudentStore>().logout();
@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
   Widget _buildExamCards(BuildContext context) {
     return Column(
       children: Student.getDummyStudent()
-          .assignedExams
+          .assignedExams!
           .map((Exam exam) => ExamCard(exam: exam))
           .toList(),
     );

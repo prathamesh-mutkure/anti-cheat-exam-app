@@ -1,13 +1,15 @@
 import 'package:anti_cheat_exam_app/models/exam/Question.dart';
+import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QuestionWidget extends StatefulWidget {
-  final Question question;
-  final int questionNo;
+  final Question? question;
+  final int? questionNo;
 
   QuestionWidget({
-    @required this.question,
-    @required this.questionNo,
+    required this.question,
+    required this.questionNo,
   });
 
   @override
@@ -18,13 +20,13 @@ class QuestionWidget extends StatefulWidget {
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
-  final Question question;
-  final int questionNo;
-  String chosenOptionKey;
+  final Question? question;
+  final int? questionNo;
+  String? chosenOptionKey;
 
   _QuestionWidgetState({
-    @required this.question,
-    @required this.questionNo,
+    required this.question,
+    required this.questionNo,
   });
 
   @override
@@ -36,16 +38,17 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Question $questionNo: '),
-            Text(question.title),
-            ..._buildOptions(),
+            Text(
+                'Question ${context.watch<ExamStore>().currentQuestionNo + 1}: '),
+            Text(context.watch<ExamStore>().currentQuestion!.title),
+            ..._buildOptions(context.watch<ExamStore>().currentQuestion!),
           ],
         ),
       ),
     );
   }
 
-  List<Widget> _buildOptions() {
+  List<Widget> _buildOptions(Question question) {
     List<Widget> optionList = [];
 
     question.options.forEach((key, value) {
@@ -54,7 +57,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           value: key,
           title: Text(value),
           groupValue: chosenOptionKey,
-          onChanged: (val) {
+          onChanged: (String? val) {
             setState(() => chosenOptionKey = val);
           },
         ),

@@ -18,22 +18,22 @@ class TextFieldWidget extends StatelessWidget {
   final TextInputAction inputAction;
 
   const TextFieldWidget({
-    Key key,
-    this.icon,
-    this.hint,
-    this.errorText,
+    Key? key,
+    required this.icon,
+    required this.hint,
+    required this.errorText,
     this.isObscure = false,
-    this.inputType,
-    this.textController,
+    required this.inputType,
+    required this.textController,
     this.isIcon = true,
     this.padding = const EdgeInsets.all(0),
     this.hintColor = Colors.grey,
     this.iconColor = Colors.grey,
-    this.focusNode,
-    this.onFieldSubmitted,
-    this.onChanged,
+    required this.focusNode,
+    required this.onFieldSubmitted,
+    required this.onChanged,
     this.autoFocus = false,
-    this.inputAction,
+    required this.inputAction,
   }) : super(key: key);
 
   @override
@@ -54,12 +54,11 @@ class TextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
             hintText: this.hint,
             hintStyle:
-                Theme.of(context).textTheme.body1.copyWith(color: hintColor),
+                Theme.of(context).textTheme.body1!.copyWith(color: hintColor),
             errorText: errorText,
             counterText: '',
             icon: this.isIcon ? Icon(this.icon, color: iconColor) : null),
       ),
     );
   }
-
 }
