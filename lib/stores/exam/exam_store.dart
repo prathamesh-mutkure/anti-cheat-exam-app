@@ -26,6 +26,10 @@ abstract class _ExamStore with Store {
   @observable
   ObservableList<String?>? answers;
 
+  bool didLeaveExam = false;
+
+  int leaveExamCount = 0;
+
   @action
   startExam(Exam exam, BuildContext context) {
     if (_currentExam == null) {
@@ -33,7 +37,6 @@ abstract class _ExamStore with Store {
       totalQuestions = _currentExam?.questions.length;
       answers = ObservableList();
       answers!.length = totalQuestions!;
-      print(answers);
     }
 
     Navigator.pushNamed(
@@ -65,6 +68,5 @@ abstract class _ExamStore with Store {
   @action
   setAnswer(int questionNo, String? key) {
     answers![questionNo] = key;
-    print(answers);
   }
 }

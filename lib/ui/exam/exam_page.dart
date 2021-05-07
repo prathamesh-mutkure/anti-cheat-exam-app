@@ -1,6 +1,7 @@
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
+import 'package:anti_cheat_exam_app/widgets/exam/exam_warning_alert.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_button.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +28,32 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.resumed &&
+        !context.read<ExamStore>().didLeaveExam) {
+      context.read<ExamStore>().didLeaveExam = true;
+
+      // TODO: Set barrierDismissible false
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (_) => ExamWarningAlert(),
+      ).then((value) {
+        context.read<ExamStore>().didLeaveExam = false;
+        ++context.read<ExamStore>().leaveExamCount;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     exam = context.watch<ExamStore>().currentExam;
 
+    // TODO: Set onWillPop false
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => true,
       child: Scaffold(
         appBar: _buildAppBar(),
         body: SingleChildScrollView(
