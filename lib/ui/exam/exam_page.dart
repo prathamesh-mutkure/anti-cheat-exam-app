@@ -11,42 +11,56 @@ class ExamPage extends StatefulWidget {
   _ExamPageState createState() => _ExamPageState();
 }
 
-class _ExamPageState extends State<ExamPage> {
+class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   Exam? exam;
-  int? currentQuestion;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     exam = context.watch<ExamStore>().currentExam;
 
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              QuestionWidget(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ExamButton(
-                    text: "PREVIOUS",
-                    onPressed: () {
-                      context.read<ExamStore>().goToPreviousQuestion();
-                    },
-                  ),
-                  SizedBox(width: 20),
-                  ExamButton(
-                    text: "NEXT",
-                    onPressed: () {
-                      context.read<ExamStore>().goToNextQuestion();
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 50),
-              _buildQuestionButtons(),
-            ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: [
+                QuestionWidget(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ExamButton(
+                      text: "PREVIOUS",
+                      onPressed: () {
+                        context.read<ExamStore>().goToPreviousQuestion();
+                      },
+                    ),
+                    SizedBox(width: 20),
+                    ExamButton(
+                      text: "NEXT",
+                      onPressed: () {
+                        context.read<ExamStore>().goToNextQuestion();
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: 50),
+                _buildQuestionButtons(),
+              ],
+            ),
           ),
         ),
       ),
