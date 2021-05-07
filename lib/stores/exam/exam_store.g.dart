@@ -47,6 +47,21 @@ mixin _$ExamStore on _ExamStore, Store {
     });
   }
 
+  final _$answersAtom = Atom(name: '_ExamStore.answers');
+
+  @override
+  ObservableList<String?>? get answers {
+    _$answersAtom.reportRead();
+    return super.answers;
+  }
+
+  @override
+  set answers(ObservableList<String?>? value) {
+    _$answersAtom.reportWrite(value, super.answers, () {
+      super.answers = value;
+    });
+  }
+
   final _$_ExamStoreActionController = ActionController(name: '_ExamStore');
 
   @override
@@ -105,9 +120,21 @@ mixin _$ExamStore on _ExamStore, Store {
   }
 
   @override
+  dynamic setAnswer(int questionNo, String? key) {
+    final _$actionInfo =
+        _$_ExamStoreActionController.startAction(name: '_ExamStore.setAnswer');
+    try {
+      return super.setAnswer(questionNo, key);
+    } finally {
+      _$_ExamStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentQuestionNo: ${currentQuestionNo},
+answers: ${answers},
 currentQuestion: ${currentQuestion}
     ''';
   }

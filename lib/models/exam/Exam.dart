@@ -5,12 +5,14 @@ class Exam {
   final String name;
   final DateTime dateTime;
   final List<Question> questions;
+  final List<String> answerKeys;
 
   Exam({
     required this.code,
     required this.name,
     required this.dateTime,
     required this.questions,
+    required this.answerKeys,
   });
 
   factory Exam.getDummyExam() {
@@ -23,6 +25,7 @@ class Exam {
         Question.getDummyQuestion2(),
         Question.getDummyQuestion(),
       ],
+      answerKeys: ['A', 'B', 'C'],
     );
   }
 }

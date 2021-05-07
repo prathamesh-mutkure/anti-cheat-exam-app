@@ -10,8 +10,6 @@ class QuestionWidget extends StatefulWidget {
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
-  String? chosenOptionKey;
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,21 +17,29 @@ class _QuestionWidgetState extends State<QuestionWidget> {
       child: Container(
         padding: EdgeInsets.all(10),
         child: Observer(
-          builder: (context) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                  'Question ${context.watch<ExamStore>().currentQuestionNo + 1}: '),
-              Text(context.watch<ExamStore>().currentQuestion!.title),
-              ..._buildOptions(context.watch<ExamStore>().currentQuestion!),
-            ],
-          ),
+          builder: (context) {
+            int currentQuesNo = context.watch<ExamStore>().currentQuestionNo;
+            Question? currentQues = context.watch<ExamStore>().currentQuestion;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Question ${currentQuesNo + 1}: '),
+                Text(currentQues!.title),
+                ..._buildOptions(currentQues, currentQuesNo, context),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  List<Widget> _buildOptions(Question question) {
+  List<Widget> _buildOptions(
+    Question question,
+    int currentQues,
+    BuildContext context,
+  ) {
     List<Widget> optionList = [];
 
     question.options.forEach((key, value) {
@@ -41,9 +47,9 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         RadioListTile(
           value: key,
           title: Text(value),
-          groupValue: chosenOptionKey,
+          groupValue: context.watch<ExamStore>().answers![currentQues],
           onChanged: (String? val) {
-            setState(() => chosenOptionKey = val);
+            context.read<ExamStore>().setAnswer(currentQues, val);
           },
         ),
       );

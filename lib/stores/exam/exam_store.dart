@@ -16,18 +16,24 @@ abstract class _ExamStore with Store {
   @observable
   int currentQuestionNo = 0;
 
-  int? totalQuestions;
-
   get currentExam => _currentExam;
+
+  int? totalQuestions;
 
   @computed
   Question? get currentQuestion => _currentExam?.questions[currentQuestionNo];
+
+  @observable
+  ObservableList<String?>? answers;
 
   @action
   startExam(Exam exam, BuildContext context) {
     if (_currentExam == null) {
       _currentExam = exam;
       totalQuestions = _currentExam?.questions.length;
+      answers = ObservableList();
+      answers!.length = totalQuestions!;
+      print(answers);
     }
 
     Navigator.pushNamed(
@@ -54,5 +60,11 @@ abstract class _ExamStore with Store {
   @action
   goToQuestion(int quesNo) {
     currentQuestionNo = quesNo;
+  }
+
+  @action
+  setAnswer(int questionNo, String? key) {
+    answers![questionNo] = key;
+    print(answers);
   }
 }
