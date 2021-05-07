@@ -7,6 +7,12 @@ import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// TODO: Video Monitoring
+// TODO: AI with Google ML Kit
+// TODO: Video Call Online
+// TODO: Timer
+// TODO: Exam Assessment
+
 class ExamPage extends StatefulWidget {
   @override
   _ExamPageState createState() => _ExamPageState();
