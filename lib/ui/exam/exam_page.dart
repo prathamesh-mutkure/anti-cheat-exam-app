@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
@@ -25,6 +27,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   List<CameraDescription>? _cameras;
   CameraController? _cameraController;
   Future<void>? _initializeControllerFuture;
+  XFile? lastImage;
 
   @override
   void initState() {
@@ -62,7 +65,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
 
   Future<void> initCameras() async {
     _cameras = await availableCameras();
-    _cameraController = CameraController(_cameras![0], ResolutionPreset.medium);
+    _cameraController = CameraController(_cameras![1], ResolutionPreset.medium);
 
     _initializeControllerFuture = _cameraController!.initialize().then((_) {
       if (!mounted) {
@@ -80,6 +83,10 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
     return WillPopScope(
       onWillPop: () async => true,
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.camera_alt),
+          onPressed: _onPictureClicked,
+        ),
         appBar: _buildAppBar(),
         body: SingleChildScrollView(
           child: Container(
@@ -106,17 +113,17 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
                 ),
                 SizedBox(height: 50),
                 _buildQuestionButtons(),
-                FutureBuilder<void>(
-                  future: _initializeControllerFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      // If the Future is complete, display the preview.
-                      return CameraPreview(_cameraController!);
-                    } else {
-                      // Otherwise, display a loading indicator.
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  },
+                SizedBox(height: 35),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildCameraStream(),
+                    ),
+                    Expanded(
+                      child: _buildImage(),
+                      // child: Container(),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -151,5 +158,41 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
         return widgets;
       }(),
     );
+  }
+
+  _buildCameraStream() {
+    return FutureBuilder<void>(
+      future: _initializeControllerFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          // If the Future is complete, display the preview.
+          return Container(
+            padding: EdgeInsets.all(6),
+            child: CameraPreview(_cameraController!),
+          );
+        } else {
+          // Otherwise, display a loading indicator.
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  _buildImage() {
+    return Container(
+      padding: EdgeInsets.all(6),
+      child:
+          lastImage != null ? Image.file(File(lastImage!.path)) : Container(),
+    );
+  }
+
+  _onPictureClicked() async {
+    try {
+      await _initializeControllerFuture;
+      lastImage = await _cameraController!.takePicture();
+      setState(() {});
+    } catch (e) {
+      print(e);
+    }
   }
 }
