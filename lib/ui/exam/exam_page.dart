@@ -9,6 +9,7 @@ import 'package:anti_cheat_exam_app/widgets/exam/question_button.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:provider/provider.dart';
 
@@ -36,12 +37,14 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
     initCameras();
+    FaceDetectionUtil.initialize();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
     _cameraController!.dispose();
+    FaceDetectionUtil.close();
     super.dispose();
   }
 
@@ -210,34 +213,14 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
     List<Face> faces =
         await FaceDetectionUtil.detectFromImagePath(lastImage!.path);
 
-    for (Face face in faces) {
-      final Rect boundingBox = face.boundingBox;
+    final bool isCheating = FaceDetectionUtil.detectCheating(faces[0]);
 
-      final double? rotY =
-          face.headEulerAngleY; // Head is rotated to the right rotY degrees
-      final double? rotZ =
-          face.headEulerAngleZ; // Head is tilted sideways rotZ degrees
-
-      print('-------------------------------');
-      print('$rotY ----- $rotZ');
-      print('-------------------------------');
-
-      // If landmark detection was enabled with FaceDetectorOptions (mouth, ears,
-      // eyes, cheeks, and nose available):
-      // final FaceLandmark leftEar = face.getLandmark(FaceLandmarkType.leftEar)!;
-      // if (leftEar != null) {
-      //   final Offset leftEarPos = leftEar.position;
-      // }
-
-      // If classification was enabled with FaceDetectorOptions:
-      // if (face.smilingProbability != null) {
-      //   final double smileProb = face.smilingProbability!;
-      // }
-      //
-      // // If face tracking was enabled with FaceDetectorOptions:
-      // if (face.trackingId != null) {
-      //   final int id = face.trackingId!;
-      // }
+    if (isCheating) {
+      Fluttertoast.showToast(
+        msg: "CHEATING DETECTED!",
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
     }
   }
 }
