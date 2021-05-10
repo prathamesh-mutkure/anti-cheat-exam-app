@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
+import 'package:anti_cheat_exam_app/utils/face_detection/face_detection_util.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_warning_alert.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_button.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:provider/provider.dart';
 
 // TODO: Video Monitoring
@@ -125,6 +127,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
                     ),
                   ],
                 ),
+                SizedBox(height: 50),
               ],
             ),
           ),
@@ -136,7 +139,12 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   _buildAppBar() {
     return AppBar(
       title: Text(exam!.name),
-      actions: [],
+      actions: [
+        IconButton(
+          icon: Icon(Icons.update),
+          onPressed: _onAITapped,
+        ),
+      ],
     );
   }
 
@@ -193,6 +201,43 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
       setState(() {});
     } catch (e) {
       print(e);
+    }
+  }
+
+  _onAITapped() async {
+    if (lastImage == null) return;
+
+    List<Face> faces =
+        await FaceDetectionUtil.detectFromImagePath(lastImage!.path);
+
+    for (Face face in faces) {
+      final Rect boundingBox = face.boundingBox;
+
+      final double? rotY =
+          face.headEulerAngleY; // Head is rotated to the right rotY degrees
+      final double? rotZ =
+          face.headEulerAngleZ; // Head is tilted sideways rotZ degrees
+
+      print('-------------------------------');
+      print('$rotY ----- $rotZ');
+      print('-------------------------------');
+
+      // If landmark detection was enabled with FaceDetectorOptions (mouth, ears,
+      // eyes, cheeks, and nose available):
+      // final FaceLandmark leftEar = face.getLandmark(FaceLandmarkType.leftEar)!;
+      // if (leftEar != null) {
+      //   final Offset leftEarPos = leftEar.position;
+      // }
+
+      // If classification was enabled with FaceDetectorOptions:
+      // if (face.smilingProbability != null) {
+      //   final double smileProb = face.smilingProbability!;
+      // }
+      //
+      // // If face tracking was enabled with FaceDetectorOptions:
+      // if (face.trackingId != null) {
+      //   final int id = face.trackingId!;
+      // }
     }
   }
 }

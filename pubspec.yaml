@@ -28,6 +28,9 @@ dependencies:
   path: ^1.8.0
   path_provider: ^2.0.1
 
+  # AI and ML
+  google_ml_vision: ^0.0.3+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
