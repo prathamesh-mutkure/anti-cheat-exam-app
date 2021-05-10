@@ -4,6 +4,7 @@ import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_warning_alert.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_button.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,16 +22,21 @@ class ExamPage extends StatefulWidget {
 
 class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   Exam? exam;
+  List<CameraDescription>? _cameras;
+  CameraController? _cameraController;
+  Future<void>? _initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
+    initCameras();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
+    _cameraController!.dispose();
     super.dispose();
   }
 
@@ -52,6 +58,18 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
         ++context.read<ExamStore>().leaveExamCount;
       });
     }
+  }
+
+  Future<void> initCameras() async {
+    _cameras = await availableCameras();
+    _cameraController = CameraController(_cameras![0], ResolutionPreset.medium);
+
+    _initializeControllerFuture = _cameraController!.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
   }
 
   @override
@@ -88,6 +106,18 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
                 ),
                 SizedBox(height: 50),
                 _buildQuestionButtons(),
+                FutureBuilder<void>(
+                  future: _initializeControllerFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      // If the Future is complete, display the preview.
+                      return CameraPreview(_cameraController!);
+                    } else {
+                      // Otherwise, display a loading indicator.
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
               ],
             ),
           ),
@@ -99,6 +129,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   _buildAppBar() {
     return AppBar(
       title: Text(exam!.name),
+      actions: [],
     );
   }
 
