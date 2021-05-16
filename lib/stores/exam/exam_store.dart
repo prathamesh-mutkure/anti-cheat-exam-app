@@ -1,9 +1,8 @@
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/models/exam/Question.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:mobx/mobx.dart';
+import 'package:timer_count_down/timer_controller.dart';
 
 import '../../routes.dart';
 
@@ -32,8 +31,7 @@ abstract class _ExamStore with Store {
 
   int leaveExamCount = 0;
 
-  CountdownTimer? _examTimer;
-  CountdownTimerController? _examTimerController;
+  CountdownController? countdownController;
 
   @action
   startExam(Exam exam, BuildContext context) {
@@ -43,14 +41,7 @@ abstract class _ExamStore with Store {
       answers = ObservableList();
       answers!.length = totalQuestions!;
 
-      _examTimerController = CountdownTimerController(
-        endTime: DateTime.now().millisecondsSinceEpoch * 60,
-      );
-
-      _examTimer = CountdownTimer(
-        endTime: DateTime.now().millisecondsSinceEpoch * 60,
-        onEnd: endExam,
-      );
+      countdownController = CountdownController();
     }
 
     Navigator.pushNamed(
@@ -62,6 +53,8 @@ abstract class _ExamStore with Store {
   @action
   endExam() {
     _currentExam = null;
+    countdownController!.pause();
+    countdownController = null;
   }
 
   @action

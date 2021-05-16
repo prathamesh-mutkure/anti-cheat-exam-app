@@ -4,6 +4,7 @@ import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/utils/face_detection/face_detection_util.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
+import 'package:anti_cheat_exam_app/widgets/exam/exam_timer.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_warning_alert.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_button.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:provider/provider.dart';
+import 'package:timer_count_down/timer_controller.dart';
 
 // TODO: Video Monitoring
 // TODO: AI with Google ML Kit
@@ -27,6 +29,8 @@ class ExamPage extends StatefulWidget {
 
 class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   Exam? exam;
+  CountdownController? _countdownController;
+
   List<CameraDescription>? _cameras;
   CameraController? _cameraController;
   Future<void>? _initializeControllerFuture;
@@ -56,6 +60,8 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
         !context.read<ExamStore>().didLeaveExam) {
       context.read<ExamStore>().didLeaveExam = true;
 
+      _countdownController!.pause();
+
       // TODO: Set barrierDismissible false
       showDialog(
         context: context,
@@ -64,6 +70,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
       ).then((value) {
         context.read<ExamStore>().didLeaveExam = false;
         ++context.read<ExamStore>().leaveExamCount;
+        _countdownController!.resume();
       });
     }
   }
@@ -83,6 +90,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     exam = context.watch<ExamStore>().currentExam;
+    _countdownController = context.read<ExamStore>().countdownController;
 
     // TODO: Set onWillPop false
     return WillPopScope(
@@ -98,38 +106,11 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
             child: Column(
               children: [
                 QuestionWidget(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ExamButton(
-                      text: "PREVIOUS",
-                      onPressed: () {
-                        context.read<ExamStore>().goToPreviousQuestion();
-                      },
-                    ),
-                    SizedBox(width: 20),
-                    ExamButton(
-                      text: "NEXT",
-                      onPressed: () {
-                        context.read<ExamStore>().goToNextQuestion();
-                      },
-                    ),
-                  ],
-                ),
+                _buildQuestionNavigationButtons(),
                 SizedBox(height: 50),
                 _buildQuestionButtons(),
                 SizedBox(height: 35),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildCameraStream(),
-                    ),
-                    Expanded(
-                      child: _buildImage(),
-                      // child: Container(),
-                    ),
-                  ],
-                ),
+                _buildVideoSection(),
                 SizedBox(height: 50),
               ],
             ),
@@ -143,9 +124,35 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
     return AppBar(
       title: Text(exam!.name),
       actions: [
-        IconButton(
-          icon: Icon(Icons.update),
-          onPressed: _onAITapped,
+        ExamTimer(),
+      ],
+    );
+  }
+
+  _buildQuestionNavigationButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ExamButton(
+          text: "PREVIOUS",
+          onPressed: () {
+            context.read<ExamStore>().goToPreviousQuestion();
+          },
+        ),
+        SizedBox(width: 20),
+        ExamButton(
+          text: "NEXT",
+          onPressed: () {
+            context.read<ExamStore>().goToNextQuestion();
+          },
+        ),
+        // TODO: For Testing, remove during actual app
+        SizedBox(width: 20),
+        ExamButton(
+          text: "AI",
+          onPressed: () {
+            _onAITapped();
+          },
         ),
       ],
     );
@@ -194,6 +201,20 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
       padding: EdgeInsets.all(6),
       child:
           lastImage != null ? Image.file(File(lastImage!.path)) : Container(),
+    );
+  }
+
+  _buildVideoSection() {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildCameraStream(),
+        ),
+        Expanded(
+          child: _buildImage(),
+          // child: Container(),
+        ),
+      ],
     );
   }
 

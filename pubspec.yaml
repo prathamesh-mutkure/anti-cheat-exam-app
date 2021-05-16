@@ -32,7 +32,7 @@ dependencies:
   google_ml_vision: ^0.0.3+1
 
   # Exam Timer
-  flutter_countdown_timer: ^4.1.0
+  timer_count_down: ^2.0.1
 
   fluttertoast: ^8.0.6
 

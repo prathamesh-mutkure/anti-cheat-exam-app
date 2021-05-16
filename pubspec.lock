@@ -230,13 +230,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_countdown_timer:
-    dependency: "direct main"
-    description:
-      name: flutter_countdown_timer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.1.0"
   flutter_mobx:
     dependency: "direct main"
     description:
@@ -553,6 +546,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.19"
+  timer_count_down:
+    dependency: "direct main"
+    description:
+      name: timer_count_down
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   timing:
     dependency: transitive
     description:
