@@ -24,7 +24,6 @@ class ExamApi {
     http.Response response = await http.get(url);
 
     var jsonResponse = jsonDecode(response.body);
-    print(jsonResponse);
 
     if (jsonResponse['err'] != null) {
       throw jsonResponse['err'];

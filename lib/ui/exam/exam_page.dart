@@ -169,7 +169,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
       children: () {
         List<Widget> widgets = [];
 
-        for (int i = 0; i < exam!.questions.length; i++) {
+        for (int i = 0; i < exam!.questions!.length; i++) {
           widgets.add(QuestionButton(questionNo: i));
         }
 

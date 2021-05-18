@@ -4,15 +4,15 @@ class Exam {
   final String id;
   final String name;
   final DateTime dateTime;
-  final List<Question> questions;
-  final List<String> answerKeys;
+  List<Question>? questions;
+  List<String>? answerKeys;
 
   Exam({
     required this.id,
     required this.name,
     required this.dateTime,
-    required this.questions,
-    required this.answerKeys,
+    this.questions,
+    this.answerKeys,
   });
 
   factory Exam.getDummyExam() {
@@ -30,17 +30,10 @@ class Exam {
   }
 
   factory Exam.fromJson(json) {
-    List<Question> questions = [];
-
-    json['questions']
-        .forEach((question) => questions.add(Question.fromJson(question)));
-
     return Exam(
-      id: json['id'],
+      id: json['_id'],
       name: json['name'],
-      dateTime: json['dateTime'],
-      questions: questions,
-      answerKeys: json['answerKeys'],
+      dateTime: DateTime.parse(json['dateTime']),
     );
   }
 }

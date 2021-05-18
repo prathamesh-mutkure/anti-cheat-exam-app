@@ -22,7 +22,7 @@ abstract class _ExamStore with Store {
   int? totalQuestions;
 
   @computed
-  Question? get currentQuestion => _currentExam?.questions[currentQuestionNo];
+  Question? get currentQuestion => _currentExam?.questions![currentQuestionNo];
 
   @observable
   ObservableList<String?>? answers;
@@ -37,7 +37,7 @@ abstract class _ExamStore with Store {
   startExam(Exam exam, BuildContext context) {
     if (_currentExam == null) {
       _currentExam = exam;
-      totalQuestions = _currentExam?.questions.length;
+      totalQuestions = _currentExam?.questions!.length;
       answers = ObservableList();
       answers!.length = totalQuestions!;
 
