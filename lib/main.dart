@@ -1,5 +1,6 @@
 import 'package:anti_cheat_exam_app/constants/strings.dart';
 import 'package:anti_cheat_exam_app/routes.dart';
+import 'package:anti_cheat_exam_app/stores/exam/assigned_exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:anti_cheat_exam_app/ui/home/home_page.dart';
@@ -19,6 +20,7 @@ void main() {
 class MyApp extends StatelessWidget {
   final StudentStore _studentStore = StudentStore();
   final ExamStore _examStore = ExamStore();
+  final AssignedExamStore _assignedExamStore = AssignedExamStore();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider(create: (_) => _studentStore),
         Provider(create: (_) => _examStore),
+        Provider(create: (_) => _assignedExamStore),
       ],
       child: MaterialApp(
         title: Strings.appName,
