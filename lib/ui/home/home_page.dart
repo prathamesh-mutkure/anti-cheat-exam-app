@@ -48,13 +48,15 @@ class HomePage extends StatelessWidget {
   Widget _buildExamCards(BuildContext context) {
     return Observer(
       builder: (context) {
-        return Column(
-          children: context
-              .watch<AssignedExamStore>()
-              .assignedExams
-              .map((Exam exam) => ExamCard(exam: exam))
-              .toList(),
-        );
+        return context.watch<AssignedExamStore>().loading
+            ? CircularProgressIndicator()
+            : Column(
+                children: context
+                    .watch<AssignedExamStore>()
+                    .assignedExams
+                    .map((Exam exam) => ExamCard(exam: exam))
+                    .toList(),
+              );
       },
     );
   }

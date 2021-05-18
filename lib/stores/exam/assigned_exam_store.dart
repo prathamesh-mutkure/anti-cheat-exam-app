@@ -13,7 +13,7 @@ abstract class _AssignedExamStore with Store {
   String? error;
 
   @observable
-  bool? loading;
+  bool loading = false;
 
   @action
   getAssignedExams(String studentId) async {
