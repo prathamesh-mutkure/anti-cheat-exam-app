@@ -409,3 +409,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Firebase
+GoogleService-Info.plist
