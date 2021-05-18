@@ -1,8 +1,10 @@
 import 'package:anti_cheat_exam_app/data/network/student_apis.dart';
 import 'package:anti_cheat_exam_app/models/Student.dart';
 import 'package:anti_cheat_exam_app/routes.dart';
+import 'package:anti_cheat_exam_app/stores/exam/assigned_exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -10,13 +12,14 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  _loginPressed(context) async {
+  _loginPressed(BuildContext context) async {
     try {
       Student student = await StudentApi.login(
         _idController.text,
         _passwordController.text,
       );
       StudentStore().login(student);
+      context.read<AssignedExamStore>().getAssignedExams(student.id);
       Navigator.pushReplacementNamed(context, Routes.home);
     } catch (e) {
       print(e);
@@ -25,6 +28,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _idController.text = "1800760308";
+    _passwordController.text = "12345678";
+
     return Scaffold(
       body: Container(
         child: Column(
