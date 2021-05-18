@@ -28,11 +28,11 @@ mixin _$StudentStore on _StudentStore, Store {
       ActionController(name: '_StudentStore');
 
   @override
-  dynamic login() {
+  dynamic login(Student student) {
     final _$actionInfo = _$_StudentStoreActionController.startAction(
         name: '_StudentStore.login');
     try {
-      return super.login();
+      return super.login(student);
     } finally {
       _$_StudentStoreActionController.endAction(_$actionInfo);
     }

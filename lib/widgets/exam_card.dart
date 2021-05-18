@@ -42,7 +42,7 @@ class ExamCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "ID: " + exam.code,
+                    "ID: " + exam.id,
                     style: TextStyle(
                       fontFamily: "assets/fonts/Roboto-Medium.ttf",
                       fontSize: 15,

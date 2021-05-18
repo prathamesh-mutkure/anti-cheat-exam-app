@@ -1,3 +1,4 @@
+import 'package:anti_cheat_exam_app/models/Student.dart';
 import 'package:mobx/mobx.dart';
 
 part 'student_store.g.dart';
@@ -5,6 +6,8 @@ part 'student_store.g.dart';
 class StudentStore = _StudentStore with _$StudentStore;
 
 abstract class _StudentStore with Store {
+  Student? currentStudent;
+
   @observable
   bool isLoggedIn = false;
 
@@ -13,12 +16,14 @@ abstract class _StudentStore with Store {
   }
 
   @action
-  login() {
+  login(Student student) {
+    currentStudent = student;
     isLoggedIn = true;
   }
 
   @action
   logout() {
+    currentStudent = null;
     isLoggedIn = false;
   }
 }

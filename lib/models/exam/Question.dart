@@ -30,4 +30,11 @@ class Question {
       },
     );
   }
+
+  factory Question.fromJson(json) {
+    return Question(
+      title: json['title'],
+      options: json['options'],
+    );
+  }
 }
