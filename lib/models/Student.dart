@@ -27,7 +27,6 @@ class Student {
   }
 
   factory Student.fromJson(var json) {
-    print(json['assignedExams']);
     return Student(
       id: json['id'],
       fname: json['fname'],

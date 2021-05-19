@@ -2,6 +2,7 @@ import 'package:anti_cheat_exam_app/data/network/exam_apis.dart';
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/models/exam/Question.dart';
 import 'package:anti_cheat_exam_app/routes.dart';
+import 'package:anti_cheat_exam_app/utils/app/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:timer_count_down/timer_controller.dart';
@@ -35,6 +36,8 @@ abstract class _ExamStore with Store {
 
   @action
   startExam(String examId, BuildContext context) async {
+    AppUtils.showLoading("Starting Exam..");
+
     _currentExam = await ExamApi.getExam(examId);
     totalQuestions = _currentExam?.questions!.length;
     answers = ObservableList();
@@ -42,7 +45,7 @@ abstract class _ExamStore with Store {
 
     countdownController = CountdownController();
 
-    print(_currentExam?.questions);
+    AppUtils.dismissLoading();
     Navigator.pushNamed(
       context,
       Routes.exam,

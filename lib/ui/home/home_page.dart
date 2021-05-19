@@ -2,7 +2,7 @@ import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/routes.dart';
 import 'package:anti_cheat_exam_app/stores/exam/assigned_exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
-import 'package:anti_cheat_exam_app/widgets/exam_card.dart';
+import 'package:anti_cheat_exam_app/widgets/exam/exam_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -23,6 +23,7 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
           child: Column(
             children: [
               _buildExamCards(context),
@@ -48,15 +49,13 @@ class HomePage extends StatelessWidget {
   Widget _buildExamCards(BuildContext context) {
     return Observer(
       builder: (context) {
-        return context.watch<AssignedExamStore>().loading
-            ? CircularProgressIndicator()
-            : Column(
-                children: context
-                    .watch<AssignedExamStore>()
-                    .assignedExams
-                    .map((Exam exam) => ExamCard(exam: exam))
-                    .toList(),
-              );
+        return Column(
+          children: context
+              .watch<AssignedExamStore>()
+              .assignedExams
+              .map((Exam exam) => ExamCard(exam: exam))
+              .toList(),
+        );
       },
     );
   }

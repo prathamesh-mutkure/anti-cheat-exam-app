@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
+import 'package:anti_cheat_exam_app/utils/app/app_utils.dart';
 import 'package:anti_cheat_exam_app/utils/face_detection/face_detection_util.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_timer.dart';
@@ -10,7 +11,6 @@ import 'package:anti_cheat_exam_app/widgets/exam/question_button.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:provider/provider.dart';
 import 'package:timer_count_down/timer_controller.dart';
@@ -224,7 +224,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
       lastImage = await _cameraController!.takePicture();
       setState(() {});
     } catch (e) {
-      print(e);
+      AppUtils.showToast(e.toString());
     }
   }
 
@@ -237,11 +237,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
     final bool isCheating = FaceDetectionUtil.detectCheating(faces[0]);
 
     if (isCheating) {
-      Fluttertoast.showToast(
-        msg: "CHEATING DETECTED!",
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      AppUtils.showToast("CHEATING DETECTED");
     }
   }
 }

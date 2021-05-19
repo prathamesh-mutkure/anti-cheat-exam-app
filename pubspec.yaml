@@ -31,11 +31,8 @@ dependencies:
   # AI and ML
   google_ml_vision: ^0.0.3+1
 
-  # Exam Timer
   timer_count_down: ^2.0.1
-
-  fluttertoast: ^8.0.6
-
+  flutter_easyloading: ^3.0.0
   http: ^0.13.3
 
 dev_dependencies:

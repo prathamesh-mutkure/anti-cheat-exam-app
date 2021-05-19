@@ -7,6 +7,7 @@ import 'package:anti_cheat_exam_app/ui/home/home_page.dart';
 import 'package:anti_cheat_exam_app/ui/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         routes: Routes.routes,
         debugShowCheckedModeBanner: false,
         home: _studentStore.isLoggedIn ? HomePage() : LoginPage(),
+        builder: EasyLoading.init(),
       ),
     );
   }

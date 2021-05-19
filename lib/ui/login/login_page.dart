@@ -3,27 +3,43 @@ import 'package:anti_cheat_exam_app/models/Student.dart';
 import 'package:anti_cheat_exam_app/routes.dart';
 import 'package:anti_cheat_exam_app/stores/exam/assigned_exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
+import 'package:anti_cheat_exam_app/utils/app/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
 
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   _loginPressed(BuildContext context) async {
     try {
+      AppUtils.showLoading("Logging in..");
       Student student = await StudentApi.login(
         _idController.text,
         _passwordController.text,
       );
       StudentStore().login(student);
       context.read<AssignedExamStore>().getAssignedExams(student.id);
+      AppUtils.dismissLoading();
       Navigator.pushReplacementNamed(context, Routes.home);
     } catch (e) {
-      print(e);
+      AppUtils.dismissLoading();
+      AppUtils.showToast(e.toString());
     }
+  }
+
+  @override
+  void dispose() {
+    _idController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
