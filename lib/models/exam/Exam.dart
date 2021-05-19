@@ -4,15 +4,19 @@ class Exam {
   final String id;
   final String name;
   final DateTime dateTime;
+  final int questionCount;
   List<Question>? questions;
   List<String>? answerKeys;
+  String? status;
 
   Exam({
     required this.id,
     required this.name,
     required this.dateTime,
+    required this.questionCount,
     this.questions,
     this.answerKeys,
+    this.status,
   });
 
   factory Exam.getDummyExam() {
@@ -20,12 +24,14 @@ class Exam {
       id: "12345",
       name: "Maths",
       dateTime: new DateTime.now(),
+      questionCount: 3,
       questions: [
         Question.getDummyQuestion(),
         Question.getDummyQuestion2(),
         Question.getDummyQuestion(),
       ],
       answerKeys: ['A', 'B', 'C'],
+      status: "pending",
     );
   }
 
@@ -41,8 +47,10 @@ class Exam {
       id: json['_id'],
       name: json['name'],
       dateTime: DateTime.parse(json['dateTime']),
+      questionCount: json['questionCount'],
       questions: questions,
       answerKeys: json?['answerKeys'],
+      status: json?['status'],
     );
   }
 }

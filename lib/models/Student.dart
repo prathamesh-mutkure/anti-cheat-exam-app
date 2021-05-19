@@ -4,7 +4,7 @@ class Student {
   String id;
   String fname;
   String lname;
-  List<Exam>? assignedExams;
+  List<dynamic>? assignedExams;
 
   Student({
     required this.id,
@@ -31,11 +31,7 @@ class Student {
       id: json['id'],
       fname: json['fname'],
       lname: json['lname'],
-      assignedExams: [
-        Exam.getDummyExam(),
-        Exam.getDummyExam(),
-        Exam.getDummyExam(),
-      ],
+      assignedExams: json['assignedExams'],
     );
   }
 }

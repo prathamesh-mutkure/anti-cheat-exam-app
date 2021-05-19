@@ -31,7 +31,6 @@ class ExamApi {
       List<Exam> examList = [];
 
       exams.forEach((exam) => examList.add(Exam.fromJson(exam)));
-
       return examList;
     }
   }

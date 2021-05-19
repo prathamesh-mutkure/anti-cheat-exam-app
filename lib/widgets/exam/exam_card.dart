@@ -139,7 +139,7 @@ class ExamCard extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    "25 Questions",
+                    "${exam.questionCount} Questions",
                     style: TextStyle(
                       fontFamily: "assets/fonts/Roboto-Medium.ttf",
                       fontSize: 15,
@@ -160,7 +160,9 @@ class ExamCard extends StatelessWidget {
                       height: 40,
                       width: 100,
                       decoration: BoxDecoration(
-                        color: Color(0xff74b9ff),
+                        color: exam.status == 'pending'
+                            ? Colors.blue
+                            : Color(0xff74b9ff),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Center(
