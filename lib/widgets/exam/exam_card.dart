@@ -1,5 +1,7 @@
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
+import 'package:date_format/date_format.dart';
+import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +71,10 @@ class ExamCard extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        "21 Oct, 1PM",
+                        formatDate(
+                          exam.startDate,
+                          [dd, ' ', M, ', ', HH, ':', nn, ' ', am],
+                        ),
                         style: TextStyle(
                           fontFamily: "assets/fonts/Roboto-Medium.ttf",
                           fontSize: 15,
@@ -89,7 +94,10 @@ class ExamCard extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        "24 Oct, 7PM",
+                        formatDate(
+                          exam.endDate,
+                          [dd, ' ', M, ', ', HH, ':', nn, ' ', am],
+                        ),
                         style: TextStyle(
                           fontFamily: "assets/fonts/Roboto-Medium.ttf",
                           fontSize: 15,
@@ -115,7 +123,7 @@ class ExamCard extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    "1 hour",
+                    prettyDuration(exam.duration),
                     style: TextStyle(
                       fontFamily: "assets/fonts/Roboto-Medium.ttf",
                       fontSize: 15,

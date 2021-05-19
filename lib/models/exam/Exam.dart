@@ -3,7 +3,9 @@ import 'package:anti_cheat_exam_app/models/exam/Question.dart';
 class Exam {
   final String id;
   final String name;
-  final DateTime dateTime;
+  final DateTime startDate;
+  final DateTime endDate;
+  final Duration duration;
   final int questionCount;
   List<Question>? questions;
   List<String>? answerKeys;
@@ -12,7 +14,9 @@ class Exam {
   Exam({
     required this.id,
     required this.name,
-    required this.dateTime,
+    required this.startDate,
+    required this.endDate,
+    required this.duration,
     required this.questionCount,
     this.questions,
     this.answerKeys,
@@ -23,7 +27,9 @@ class Exam {
     return Exam(
       id: "12345",
       name: "Maths",
-      dateTime: new DateTime.now(),
+      startDate: new DateTime.now(),
+      endDate: new DateTime.now(),
+      duration: Duration(seconds: 3600),
       questionCount: 3,
       questions: [
         Question.getDummyQuestion(),
@@ -46,7 +52,9 @@ class Exam {
     return Exam(
       id: json['_id'],
       name: json['name'],
-      dateTime: DateTime.parse(json['dateTime']),
+      startDate: DateTime.parse(json['startDate']),
+      endDate: DateTime.parse(json['endDate']),
+      duration: Duration(seconds: json['duration']),
       questionCount: json['questionCount'],
       questions: questions,
       answerKeys: json?['answerKeys'],
