@@ -1,10 +1,10 @@
+import 'package:anti_cheat_exam_app/data/network/exam_apis.dart';
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/models/exam/Question.dart';
+import 'package:anti_cheat_exam_app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:timer_count_down/timer_controller.dart';
-
-import '../../routes.dart';
 
 part 'exam_store.g.dart';
 
@@ -34,16 +34,15 @@ abstract class _ExamStore with Store {
   CountdownController? countdownController;
 
   @action
-  startExam(Exam exam, BuildContext context) {
-    if (_currentExam == null) {
-      _currentExam = exam;
-      totalQuestions = _currentExam?.questions!.length;
-      answers = ObservableList();
-      answers!.length = totalQuestions!;
+  startExam(String examId, BuildContext context) async {
+    _currentExam = await ExamApi.getExam(examId);
+    totalQuestions = _currentExam?.questions!.length;
+    answers = ObservableList();
+    answers!.length = totalQuestions!;
 
-      countdownController = CountdownController();
-    }
+    countdownController = CountdownController();
 
+    print(_currentExam?.questions);
     Navigator.pushNamed(
       context,
       Routes.exam,

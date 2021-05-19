@@ -1,6 +1,6 @@
 class Question {
   final String title;
-  final Map<String, String> options;
+  final Map<String, dynamic> options;
 
   Question({
     required this.title,

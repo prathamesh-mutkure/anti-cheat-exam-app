@@ -62,18 +62,14 @@ mixin _$ExamStore on _ExamStore, Store {
     });
   }
 
-  final _$_ExamStoreActionController = ActionController(name: '_ExamStore');
+  final _$startExamAsyncAction = AsyncAction('_ExamStore.startExam');
 
   @override
-  dynamic startExam(Exam exam, BuildContext context) {
-    final _$actionInfo =
-        _$_ExamStoreActionController.startAction(name: '_ExamStore.startExam');
-    try {
-      return super.startExam(exam, context);
-    } finally {
-      _$_ExamStoreActionController.endAction(_$actionInfo);
-    }
+  Future startExam(String examId, BuildContext context) {
+    return _$startExamAsyncAction.run(() => super.startExam(examId, context));
   }
+
+  final _$_ExamStoreActionController = ActionController(name: '_ExamStore');
 
   @override
   dynamic endExam() {

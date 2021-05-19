@@ -10,8 +10,8 @@ class ExamCard extends StatelessWidget {
     required this.exam,
   });
 
-  onStartExamTapped(BuildContext context) {
-    context.read<ExamStore>().startExam(exam, context);
+  onStartExamTapped(BuildContext context) async {
+    await context.read<ExamStore>().startExam(exam.id, context);
   }
 
   @override

@@ -30,10 +30,19 @@ class Exam {
   }
 
   factory Exam.fromJson(json) {
+    List<Question> questions = [];
+
+    if (json['questions'] != null) {
+      json['questions']
+          .forEach((question) => questions.add(Question.fromJson(question)));
+    }
+
     return Exam(
       id: json['_id'],
       name: json['name'],
       dateTime: DateTime.parse(json['dateTime']),
+      questions: questions,
+      answerKeys: json?['answerKeys'],
     );
   }
 }
