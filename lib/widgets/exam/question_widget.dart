@@ -13,7 +13,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      elevation: 0.0,
       child: Container(
         padding: EdgeInsets.all(10),
         child: Observer(
@@ -24,8 +25,28 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Question ${currentQuesNo + 1}: '),
-                Text(currentQues!.title),
+                Row(
+                  children: [
+                    Text(
+                      '${currentQuesNo + 1}:  ',
+                      style: TextStyle(
+                        fontFamily: "assets/fonts/Roboto-Medium.ttf",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff636e72),
+                      ),
+                    ),
+                    Text(
+                      currentQues!.title,
+                      style: TextStyle(
+                        fontFamily: "assets/fonts/Roboto-Medium.ttf",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff636e72),
+                      ),
+                    ),
+                  ],
+                ),
                 ..._buildOptions(currentQues, currentQuesNo, context),
               ],
             );
@@ -46,7 +67,16 @@ class _QuestionWidgetState extends State<QuestionWidget> {
       optionList.add(
         RadioListTile(
           value: key,
-          title: Text(value),
+          title: Text(
+            value,
+            style: TextStyle(
+              fontFamily: "assets/fonts/Roboto-Medium.ttf",
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Color(0xff636e72),
+            ),
+          ),
+          activeColor: Colors.blueGrey,
           groupValue: context.watch<ExamStore>().answers![currentQues],
           onChanged: (String? val) {
             context.read<ExamStore>().setAnswer(currentQues, val);

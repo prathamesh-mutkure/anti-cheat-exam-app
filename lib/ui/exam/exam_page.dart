@@ -106,9 +106,77 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
             child: Column(
               children: [
                 QuestionWidget(),
+                SizedBox(height: 20),
                 _buildQuestionNavigationButtons(),
-                SizedBox(height: 50),
-                _buildQuestionButtons(),
+                SizedBox(height: 20),
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff9fe6a0),
+                                    borderRadius: BorderRadius.circular(3),
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Answered',
+                                  style: TextStyle(
+                                    fontFamily:
+                                        "assets/fonts/Roboto-Medium.ttf",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(width: 35),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff132c33),
+                                    borderRadius: BorderRadius.circular(3),
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Unanswered',
+                                  style: TextStyle(
+                                    fontFamily:
+                                        "assets/fonts/Roboto-Medium.ttf",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      _buildQuestionButtons(),
+                    ],
+                  ),
+                ),
                 SizedBox(height: 35),
                 _buildVideoSection(),
                 SizedBox(height: 50),
@@ -124,7 +192,15 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
     return AppBar(
       title: Text(exam!.name),
       actions: [
-        ExamTimer(),
+        Row(
+          children: [
+            Icon(Icons.timer),
+            SizedBox(
+              width: 5,
+            ),
+            ExamTimer(),
+          ],
+        )
       ],
     );
   }
@@ -160,7 +236,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
 
   _buildQuestionButtons() {
     return GridView.count(
-      crossAxisCount: 5,
+      crossAxisCount: 7,
       shrinkWrap: true,
       padding: EdgeInsets.all(2),
       mainAxisSpacing: 5,

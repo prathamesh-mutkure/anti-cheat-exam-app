@@ -14,7 +14,15 @@ class ExamTimer extends StatelessWidget {
         build: (context, val) {
           int minutes = val ~/ 60;
           int secs = (val % 60).toInt();
-          return Text('$minutes:$secs');
+          return Text(
+            '$minutes:$secs',
+            style: TextStyle(
+              fontFamily: "assets/fonts/Roboto-Medium.ttf",
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          );
         },
         controller: context.read<ExamStore>().countdownController,
       ),

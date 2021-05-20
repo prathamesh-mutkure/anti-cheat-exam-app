@@ -20,10 +20,10 @@ class QuestionButton extends StatelessWidget {
             height: 25,
             width: 25,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(0),
               color: context.watch<ExamStore>().answers![questionNo] != null
-                  ? Colors.green
-                  : Colors.red,
+                  ? Color(0xff9fe6a0)
+                  : Color(0xff132c33),
             ),
             alignment: Alignment.center,
             child: Text(
