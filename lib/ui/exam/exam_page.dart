@@ -103,81 +103,18 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
         appBar: _buildAppBar(),
         body: SingleChildScrollView(
           child: Container(
+            color: Colors.white,
             child: Column(
               children: [
+                SizedBox(height: 20),
                 QuestionWidget(),
                 SizedBox(height: 20),
                 ExamNavigationButtons(onAI: _onAITapped),
-                SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  height: 20,
-                                  width: 20,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff9fe6a0),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Answered',
-                                  style: TextStyle(
-                                    fontFamily:
-                                        "assets/fonts/Roboto-Medium.ttf",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(width: 35),
-                            Row(
-                              children: [
-                                Container(
-                                  height: 20,
-                                  width: 20,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff132c33),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Unanswered',
-                                  style: TextStyle(
-                                    fontFamily:
-                                        "assets/fonts/Roboto-Medium.ttf",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      _buildQuestionButtons(),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 35),
+                SizedBox(height: 30),
+                _buildInfoWidget(),
+                SizedBox(height: 30),
+                _buildQuestionButtons(),
+                SizedBox(height: 30),
                 _buildVideoSection(),
                 SizedBox(height: 50),
               ],
@@ -200,6 +137,52 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
             ),
             ExamTimer(),
           ],
+        )
+      ],
+    );
+  }
+
+  _buildInfoWidget() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 20,
+          width: 20,
+          decoration: BoxDecoration(
+            color: Color(0xff9fe6a0),
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ),
+        SizedBox(width: 8),
+        Text(
+          'Answered',
+          style: TextStyle(
+            fontFamily: "assets/fonts/Roboto-Medium.ttf",
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
+        ),
+        SizedBox(width: 35),
+        Container(
+          height: 20,
+          width: 20,
+          decoration: BoxDecoration(
+            color: Color(0xff132c33),
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ),
+        SizedBox(width: 8),
+        Text(
+          'Unanswered',
+          style: TextStyle(
+            fontFamily: "assets/fonts/Roboto-Medium.ttf",
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
         )
       ],
     );

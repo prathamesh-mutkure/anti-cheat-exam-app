@@ -52,8 +52,8 @@ class Exam {
     return Exam(
       id: json['_id'],
       name: json['name'],
-      startDate: DateTime.parse(json['startDate']),
-      endDate: DateTime.parse(json['endDate']),
+      startDate: DateTime.parse(json['startDate']).toLocal(),
+      endDate: DateTime.parse(json['endDate']).toLocal(),
       duration: Duration(seconds: json['duration']),
       questionCount: json['questionCount'],
       questions: questions,
