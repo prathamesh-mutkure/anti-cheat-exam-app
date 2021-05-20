@@ -5,8 +5,15 @@ import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+enum ExamType {
+  Past,
+  Present,
+  Future,
+}
+
 class ExamCard extends StatelessWidget {
   final Exam exam;
+  ExamType? examType;
 
   ExamCard({
     required this.exam,
@@ -16,8 +23,25 @@ class ExamCard extends StatelessWidget {
     await context.read<ExamStore>().startExam(exam.id, context);
   }
 
+  detectDate() {
+    int currentDate = DateTime.now().toLocal().millisecondsSinceEpoch;
+    int startDate = exam.startDate.millisecondsSinceEpoch;
+    int endDate = exam.endDate.millisecondsSinceEpoch;
+
+    if (currentDate < startDate) {
+      examType = ExamType.Past;
+    } else if (currentDate >= startDate && currentDate <= endDate) {
+      examType = ExamType.Present;
+    } else {
+      examType = ExamType.Future;
+    }
+
+    print(examType);
+  }
+
   @override
   Widget build(BuildContext context) {
+    detectDate();
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
@@ -161,16 +185,18 @@ class ExamCard extends StatelessWidget {
               Row(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      onStartExamTapped(context);
-                    },
+                    onTap: examType != ExamType.Present
+                        ? null
+                        : () {
+                            onStartExamTapped(context);
+                          },
                     child: Container(
                       height: 40,
                       width: 100,
                       decoration: BoxDecoration(
-                        color: exam.status == 'pending'
-                            ? Colors.blue
-                            : Color(0xff74b9ff),
+                        color: examType != ExamType.Present
+                            ? Color(0xff74b9ff)
+                            : Colors.blue,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Center(
