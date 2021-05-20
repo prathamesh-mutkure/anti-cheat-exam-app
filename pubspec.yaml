@@ -51,3 +51,5 @@ flutter:
       fonts:
         - asset: assets/fonts/Roboto-Medium.ttf
 
+  assets:
+    - assets/images/logo.png

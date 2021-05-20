@@ -53,6 +53,28 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/logo.png',
+                    scale: 3,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "ANTI CHEAT",
+                    style: TextStyle(
+                      fontFamily: "assets/fonts/Roboto-Medium.ttf",
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff34656d),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.only(
                 left: 25.0,
                 right: 25.0,
@@ -83,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 50,
                 width: 300,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: Color(0xffa7bbc7),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Center(
