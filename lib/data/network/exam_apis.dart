@@ -34,4 +34,25 @@ class ExamApi {
       return examList;
     }
   }
+
+  static Future submitExam(
+    String studentId,
+    String examId,
+    List<String> answers,
+  ) async {
+    var url = Uri.parse(Endpoints.getSubmitExam(studentId));
+    http.Response response = await http.post(
+      url,
+      body: jsonEncode({"examId": examId, "answers": answers}),
+      headers: Endpoints.postHeaders,
+    );
+
+    var jsonResponse = jsonDecode(response.body);
+
+    if (jsonResponse['err'] != null) {
+      throw jsonResponse['err'];
+    } else {
+      return true;
+    }
+  }
 }
