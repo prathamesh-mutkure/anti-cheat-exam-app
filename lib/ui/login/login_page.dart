@@ -94,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   hintText: "Password",
                 ),
+                obscureText: true,
               ),
             ),
             SizedBox(
