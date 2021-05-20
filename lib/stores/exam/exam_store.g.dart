@@ -16,6 +16,13 @@ mixin _$ExamStore on _ExamStore, Store {
           Computed<Question?>(() => super.currentQuestion,
               name: '_ExamStore.currentQuestion'))
       .value;
+  Computed<bool>? _$isLastQuestionComputed;
+
+  @override
+  bool get isLastQuestion =>
+      (_$isLastQuestionComputed ??= Computed<bool>(() => super.isLastQuestion,
+              name: '_ExamStore.isLastQuestion'))
+          .value;
 
   final _$_currentExamAtom = Atom(name: '_ExamStore._currentExam');
 
@@ -131,7 +138,8 @@ mixin _$ExamStore on _ExamStore, Store {
     return '''
 currentQuestionNo: ${currentQuestionNo},
 answers: ${answers},
-currentQuestion: ${currentQuestion}
+currentQuestion: ${currentQuestion},
+isLastQuestion: ${isLastQuestion}
     ''';
   }
 }

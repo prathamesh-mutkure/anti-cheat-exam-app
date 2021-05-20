@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class ExamButton extends StatelessWidget {
   final text;
   final void Function() onPressed;
+  final Color color;
 
   ExamButton({
     required this.text,
     required this.onPressed,
+    this.color = Colors.blueAccent,
   });
 
   @override
@@ -15,7 +17,7 @@ class ExamButton extends StatelessWidget {
     return RoundedButtonWidget(
       buttonText: text,
       onPressed: onPressed,
-      buttonColor: Colors.blueAccent,
+      buttonColor: color,
     );
   }
 }

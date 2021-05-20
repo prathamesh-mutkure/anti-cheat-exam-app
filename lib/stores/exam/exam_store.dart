@@ -34,6 +34,9 @@ abstract class _ExamStore with Store {
 
   CountdownController? countdownController;
 
+  @computed
+  bool get isLastQuestion => currentQuestionNo == totalQuestions! - 1;
+
   @action
   startExam(String examId, BuildContext context) async {
     AppUtils.showLoading("Starting Exam..");

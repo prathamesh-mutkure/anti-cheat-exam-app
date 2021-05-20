@@ -4,7 +4,7 @@ import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/utils/app/app_utils.dart';
 import 'package:anti_cheat_exam_app/utils/face_detection/face_detection_util.dart';
-import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
+import 'package:anti_cheat_exam_app/widgets/exam/exam_navigation_buttons.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_timer.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_warning_alert.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_button.dart';
@@ -106,7 +106,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
             child: Column(
               children: [
                 QuestionWidget(),
-                _buildQuestionNavigationButtons(),
+                ExamNavigationButtons(onAI: _onAITapped),
                 SizedBox(height: 50),
                 _buildQuestionButtons(),
                 SizedBox(height: 35),
@@ -125,35 +125,6 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
       title: Text(exam!.name),
       actions: [
         ExamTimer(),
-      ],
-    );
-  }
-
-  _buildQuestionNavigationButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ExamButton(
-          text: "PREVIOUS",
-          onPressed: () {
-            context.read<ExamStore>().goToPreviousQuestion();
-          },
-        ),
-        SizedBox(width: 20),
-        ExamButton(
-          text: "NEXT",
-          onPressed: () {
-            context.read<ExamStore>().goToNextQuestion();
-          },
-        ),
-        // TODO: For Testing, remove during actual app
-        SizedBox(width: 20),
-        ExamButton(
-          text: "AI",
-          onPressed: () {
-            _onAITapped();
-          },
-        ),
       ],
     );
   }
