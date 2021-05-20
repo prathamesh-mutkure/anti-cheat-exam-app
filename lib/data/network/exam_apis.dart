@@ -35,10 +35,10 @@ class ExamApi {
     }
   }
 
-  static Future submitExam(
+  static Future<bool> submitExam(
     String studentId,
     String examId,
-    List<String> answers,
+    List<String?> answers,
   ) async {
     var url = Uri.parse(Endpoints.getSubmitExam(studentId));
     http.Response response = await http.post(
@@ -50,6 +50,7 @@ class ExamApi {
     var jsonResponse = jsonDecode(response.body);
 
     if (jsonResponse['err'] != null) {
+      print("ERR:" + jsonResponse['err']);
       throw jsonResponse['err'];
     } else {
       return true;

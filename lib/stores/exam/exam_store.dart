@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:anti_cheat_exam_app/data/network/exam_apis.dart';
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/models/exam/Question.dart';
 import 'package:anti_cheat_exam_app/routes.dart';
+import 'package:anti_cheat_exam_app/stores/exam/assigned_exam_store.dart';
 import 'package:anti_cheat_exam_app/utils/app/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 import 'package:timer_count_down/timer_controller.dart';
 
 part 'exam_store.g.dart';
@@ -56,10 +60,32 @@ abstract class _ExamStore with Store {
   }
 
   @action
-  endExam() {
-    _currentExam = null;
-    countdownController!.pause();
-    countdownController = null;
+  endExam(BuildContext context, String studentId) async {
+    try {
+      AppUtils.showLoading("Submitting Exam...");
+      bool submitted = await ExamApi.submitExam(
+        studentId,
+        _currentExam!.id,
+        answers!.toList(),
+      );
+
+      if (submitted) {
+        Navigator.pop(context);
+        Timer(Duration(milliseconds: 100), () {
+          _currentExam = null;
+          totalQuestions = null;
+          answers = null;
+          countdownController!.pause();
+          countdownController = null;
+          currentQuestionNo = 0;
+        });
+        AppUtils.dismissLoading();
+        context.read<AssignedExamStore>().getAssignedExams(studentId);
+      }
+    } catch (e) {
+      print(e);
+      AppUtils.showToast(e.toString());
+    }
   }
 
   @action

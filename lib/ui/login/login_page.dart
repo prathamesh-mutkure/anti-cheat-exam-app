@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
         _idController.text,
         _passwordController.text,
       );
-      StudentStore().login(student);
+      context.read<StudentStore>().login(student);
       context.read<AssignedExamStore>().getAssignedExams(student.id);
       AppUtils.dismissLoading();
       Navigator.pushReplacementNamed(context, Routes.home);
