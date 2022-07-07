@@ -186,7 +186,9 @@ class ExamCard extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: examType != ExamType.Present
-                        ? null
+                        ? () {
+                            onStartExamTapped(context);
+                          }
                         : () {
                             onStartExamTapped(context);
                           },
@@ -196,7 +198,7 @@ class ExamCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: examType != ExamType.Present
                             ? Color(0xff74b9ff)
-                            : Colors.blue,
+                            : Color(0xff74b9ff),
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Center(

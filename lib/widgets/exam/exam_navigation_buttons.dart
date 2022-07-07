@@ -1,6 +1,7 @@
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -28,10 +29,26 @@ class ExamNavigationButtons extends StatelessWidget {
                 ? ExamButton(
                     text: "END EXAM",
                     color: Colors.red,
-                    onPressed: () {
-                      String studentId =
-                          context.read<StudentStore>().currentStudent!.id;
-                      context.read<ExamStore>().endExam(context, studentId);
+                    onPressed: () async {
+                      // AlertDialog();
+
+                      bool confirmEnd = await confirm(
+                        context,
+                        title: Text('WARNING'),
+                        content: Text(
+                            'You exited the exam 3 times and suspicious behavior was detected 1 times?'),
+                        textOK: Text(
+                          'END',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        textCancel: Text('CANCEL'),
+                      );
+
+                      if (confirmEnd) {
+                        String studentId =
+                            context.read<StudentStore>().currentStudent!.id;
+                        context.read<ExamStore>().endExam(context, studentId);
+                      }
                     },
                   )
                 : ExamButton(

@@ -1,8 +1,9 @@
 class Endpoints {
-  // static const String baseUrl = "http://localhost:8000/api";
+  static const String baseUrl = "http://10.0.2.2:8000/api";
+  // 10.0.2.2
 
-  static const String baseUrl =
-      "https://anit-cheat-app-backend.herokuapp.com/api";
+  // static const String baseUrl =
+  //     "https://anit-cheat-app-backend.herokuapp.com/api";
 
   static const String login = "$baseUrl/login";
 

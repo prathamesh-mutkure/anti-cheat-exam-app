@@ -11,14 +11,12 @@ import 'package:anti_cheat_exam_app/widgets/exam/question_button.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/question_widget.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_vision/google_ml_vision.dart';
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:provider/provider.dart';
 import 'package:timer_count_down/timer_controller.dart';
 
 // TODO: Video Monitoring
-// TODO: AI with Google ML Kit
 // TODO: Video Call Online
-// TODO: Timer
 // TODO: Exam Assessment
 // TODO: Disable Screenshot
 
@@ -39,14 +37,14 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     initCameras();
     FaceDetectionUtil.initialize();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     _cameraController!.dispose();
     FaceDetectionUtil.close();
     super.dispose();
@@ -77,7 +75,9 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
 
   Future<void> initCameras() async {
     _cameras = await availableCameras();
-    _cameraController = CameraController(_cameras![1], ResolutionPreset.medium);
+    debugPrint(_cameras![1].toString());
+    _cameraController =
+        CameraController(_cameras!.first, ResolutionPreset.medium);
 
     _initializeControllerFuture = _cameraController!.initialize().then((_) {
       if (!mounted) {
@@ -94,7 +94,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
 
     // TODO: Set onWillPop false
     return WillPopScope(
-      onWillPop: () async => true,
+      onWillPop: () async => false,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.camera_alt),
@@ -189,22 +189,24 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   }
 
   _buildQuestionButtons() {
-    return GridView.count(
-      crossAxisCount: 7,
-      shrinkWrap: true,
-      padding: EdgeInsets.all(2),
-      mainAxisSpacing: 5,
-      crossAxisSpacing: 5,
-      physics: NeverScrollableScrollPhysics(),
-      children: () {
-        List<Widget> widgets = [];
+    return Center(
+      child: GridView.count(
+        crossAxisCount: 7,
+        shrinkWrap: true,
+        padding: EdgeInsets.all(2),
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 5,
+        physics: NeverScrollableScrollPhysics(),
+        children: () {
+          List<Widget> widgets = [];
 
-        for (int i = 0; i < exam!.questions!.length; i++) {
-          widgets.add(QuestionButton(questionNo: i));
-        }
+          for (int i = 0; i < exam!.questions!.length; i++) {
+            widgets.add(QuestionButton(questionNo: i));
+          }
 
-        return widgets;
-      }(),
+          return widgets;
+        }(),
+      ),
     );
   }
 
@@ -268,6 +270,8 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
 
     if (isCheating) {
       AppUtils.showToast("CHEATING DETECTED");
+    } else {
+      AppUtils.showToast("NO CHEATING DETECTED");
     }
   }
 }
