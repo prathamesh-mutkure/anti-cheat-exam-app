@@ -61,7 +61,7 @@ An App that aims to stop cheating in online exams with the power of AI and ML, c
 
 
 1. Import the project through Android Studio or clone it
-   - `git clone https://github.com/Apurva-tech/unite.git`
+   - `https://github.com/prathamesh-mutkure/anti-cheat-exam-app.git`
 3. Install flutter packages
    - `flutter pub get`
 4. Generate store classes

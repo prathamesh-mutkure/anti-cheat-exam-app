@@ -1,9 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Endpoints {
-  // static const String baseUrl = "http://10.0.2.2:8000/api";
-  // 10.0.2.2
-
   Endpoints._();
 
   static final String baseUrl = dotenv.env['BACKEND_URL'] ?? "";
