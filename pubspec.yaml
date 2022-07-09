@@ -32,6 +32,7 @@ dependencies:
   date_format: ^2.0.6
   duration: ^3.0.11
   confirm_dialog: ^1.0.1
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:

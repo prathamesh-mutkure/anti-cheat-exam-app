@@ -412,3 +412,6 @@ FodyWeavers.xsd
 
 # Firebase
 GoogleService-Info.plist
+
+# Enviornment Variable
+.env

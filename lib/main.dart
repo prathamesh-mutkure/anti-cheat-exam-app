@@ -7,14 +7,16 @@ import 'package:anti_cheat_exam_app/ui/home/home_page.dart';
 import 'package:anti_cheat_exam_app/ui/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  await dotenv.load();
   runApp(MyApp());
 }
 

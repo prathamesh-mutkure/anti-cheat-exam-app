@@ -1,18 +1,14 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class Endpoints {
   // static const String baseUrl = "http://10.0.2.2:8000/api";
   // 10.0.2.2
 
   Endpoints._();
 
-  static const RUNTIME_ENV =
-      String.fromEnvironment('ENV', defaultValue: 'LOCAL');
+  static final String baseUrl = dotenv.env['BACKEND_URL'] ?? "";
 
-  static const String baseUrl = RUNTIME_ENV == "LOCAL"
-      ? String.fromEnvironment('LOCAL',
-          defaultValue: 'http://10.0.2.2:8000/api')
-      : String.fromEnvironment('SERVER', defaultValue: '');
-
-  static const String login = "$baseUrl/login";
+  static final String login = "$baseUrl/login";
 
   static String getExam(String examId) => '$baseUrl/exam/$examId';
 
