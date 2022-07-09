@@ -1,9 +1,16 @@
 class Endpoints {
-  static const String baseUrl = "http://10.0.2.2:8000/api";
+  // static const String baseUrl = "http://10.0.2.2:8000/api";
   // 10.0.2.2
 
-  // static const String baseUrl =
-  //     "https://anit-cheat-app-backend.herokuapp.com/api";
+  Endpoints._();
+
+  static const RUNTIME_ENV =
+      String.fromEnvironment('ENV', defaultValue: 'LOCAL');
+
+  static const String baseUrl = RUNTIME_ENV == "LOCAL"
+      ? String.fromEnvironment('LOCAL',
+          defaultValue: 'http://10.0.2.2:8000/api')
+      : String.fromEnvironment('SERVER', defaultValue: '');
 
   static const String login = "$baseUrl/login";
 

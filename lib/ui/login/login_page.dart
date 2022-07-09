@@ -1,6 +1,7 @@
+import 'package:anti_cheat_exam_app/constants/routes.dart';
+import 'package:anti_cheat_exam_app/constants/strings.dart';
 import 'package:anti_cheat_exam_app/data/network/student_apis.dart';
 import 'package:anti_cheat_exam_app/models/Student.dart';
-import 'package:anti_cheat_exam_app/routes.dart';
 import 'package:anti_cheat_exam_app/stores/exam/assigned_exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:anti_cheat_exam_app/utils/app/app_utils.dart';
@@ -17,8 +18,23 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool isIdValid = true;
+  bool isPasswordValid = true;
+
+  _validateInputFields() {
+    setState(() {
+      isIdValid = _idController.text.length == 10;
+      isPasswordValid = _passwordController.text.length >= 8;
+    });
+  }
 
   _loginPressed(BuildContext context) async {
+    _validateInputFields();
+
+    if (!isIdValid || !isPasswordValid) {
+      return;
+    }
+
     try {
       AppUtils.showLoading("Logging in..");
       Student student = await StudentApi.login(
@@ -60,16 +76,18 @@ class _LoginPageState extends State<LoginPage> {
                   Image.asset(
                     'assets/images/logo.png',
                     scale: 3,
+                    key: Key("login_logo"),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "ANTI CHEAT",
+                    "ANTI CHEAT EXAM APP",
                     style: TextStyle(
                       fontFamily: "assets/fonts/Roboto-Medium.ttf",
                       fontSize: 30,
                       fontWeight: FontWeight.w500,
                       color: Color(0xff34656d),
                     ),
+                    key: Key("login_app_name"),
                   )
                 ],
               ),
@@ -81,18 +99,23 @@ class _LoginPageState extends State<LoginPage> {
                 bottom: 10.0,
               ),
               child: TextField(
+                key: Key(Strings.idFieldKey),
                 controller: _idController,
                 decoration: InputDecoration(
-                  hintText: "Login ID",
+                  hintText: Strings.idFieldHint,
+                  errorText: isIdValid ? null : Strings.idFieldError,
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 25.0, right: 25.0),
               child: TextField(
+                key: Key(Strings.passwordFieldKey),
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  hintText: "Password",
+                  hintText: Strings.passwordFieldHint,
+                  errorText:
+                      isPasswordValid ? null : Strings.passwordFieldError,
                 ),
                 obscureText: true,
               ),
@@ -102,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             GestureDetector(
               onTap: () => _loginPressed(context),
+              key: Key(Strings.loginButtonKey),
               child: Container(
                 height: 50,
                 width: 300,
@@ -111,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: Center(
                   child: Text(
-                    "Login",
+                    Strings.loginButtonText,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
