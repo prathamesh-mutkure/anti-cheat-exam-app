@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:anti_cheat_exam_app/data/network/api_constants.dart';
-import 'package:anti_cheat_exam_app/models/Student.dart';
+import 'package:anti_cheat_exam_app/models/student/Student.dart';
 import 'package:http/http.dart' as http;
 
 class StudentApi {

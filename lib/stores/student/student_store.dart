@@ -1,4 +1,4 @@
-import 'package:anti_cheat_exam_app/models/Student.dart';
+import 'package:anti_cheat_exam_app/models/student/Student.dart';
 import 'package:mobx/mobx.dart';
 
 part 'student_store.g.dart';
