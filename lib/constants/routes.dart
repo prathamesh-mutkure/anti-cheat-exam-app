@@ -1,6 +1,6 @@
-import 'package:anti_cheat_exam_app/ui/exam/exam_page.dart';
-import 'package:anti_cheat_exam_app/ui/home/home_page.dart';
-import 'package:anti_cheat_exam_app/ui/login/login_page.dart';
+import 'package:anti_cheat_exam_app/pages/exam_page.dart';
+import 'package:anti_cheat_exam_app/pages/home_page.dart';
+import 'package:anti_cheat_exam_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 class Routes {

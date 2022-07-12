@@ -1,10 +1,10 @@
 import 'package:anti_cheat_exam_app/constants/routes.dart';
 import 'package:anti_cheat_exam_app/constants/strings.dart';
+import 'package:anti_cheat_exam_app/pages/home_page.dart';
+import 'package:anti_cheat_exam_app/pages/login_page.dart';
 import 'package:anti_cheat_exam_app/stores/exam/assigned_exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
-import 'package:anti_cheat_exam_app/ui/home/home_page.dart';
-import 'package:anti_cheat_exam_app/ui/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
