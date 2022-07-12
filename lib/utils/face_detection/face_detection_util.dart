@@ -1,4 +1,3 @@
-// import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
 class FaceDetectionUtil {
