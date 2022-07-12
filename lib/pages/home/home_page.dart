@@ -3,7 +3,6 @@ import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/stores/exam/assigned_exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';

@@ -120,9 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
             ),
-            SizedBox(
-              height: 50,
-            ),
+            SizedBox(height: 50),
             GestureDetector(
               onTap: () => _loginPressed(context),
               key: Key(Strings.loginButtonKey),
