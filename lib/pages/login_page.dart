@@ -1,7 +1,7 @@
 import 'package:anti_cheat_exam_app/constants/routes.dart';
 import 'package:anti_cheat_exam_app/constants/strings.dart';
-import 'package:anti_cheat_exam_app/data/network/student_apis.dart';
 import 'package:anti_cheat_exam_app/models/student/Student.dart';
+import 'package:anti_cheat_exam_app/network/student_apis.dart';
 import 'package:anti_cheat_exam_app/stores/exam/assigned_exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:anti_cheat_exam_app/utils/app/app_utils.dart';

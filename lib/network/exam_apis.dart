@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:anti_cheat_exam_app/data/network/api_constants.dart';
+import 'package:anti_cheat_exam_app/constants/api_endpoints.dart';
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:http/http.dart' as http;
 
 class ExamApi {
   static Future<Exam> getExam(String examId) async {
-    var url = Uri.parse(Endpoints.getExam(examId));
+    var url = Uri.parse(APIEndpoints.getExam(examId));
     http.Response response = await http.get(url);
 
     var jsonResponse = jsonDecode(response.body);
@@ -19,7 +19,7 @@ class ExamApi {
   }
 
   static Future<List<Exam>> getAssignedExams(String studentId) async {
-    var url = Uri.parse(Endpoints.getAssignedExam(studentId));
+    var url = Uri.parse(APIEndpoints.getAssignedExam(studentId));
     http.Response response = await http.get(url);
 
     var jsonResponse = jsonDecode(response.body);
@@ -40,11 +40,11 @@ class ExamApi {
     String examId,
     List<String?> answers,
   ) async {
-    var url = Uri.parse(Endpoints.getSubmitExam(studentId));
+    var url = Uri.parse(APIEndpoints.getSubmitExam(studentId));
     http.Response response = await http.post(
       url,
       body: jsonEncode({"examId": examId, "answers": answers}),
-      headers: Endpoints.postHeaders,
+      headers: APIEndpoints.postHeaders,
     );
 
     var jsonResponse = jsonDecode(response.body);
