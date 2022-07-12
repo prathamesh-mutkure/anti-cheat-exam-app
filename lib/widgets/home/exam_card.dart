@@ -35,8 +35,6 @@ class ExamCard extends StatelessWidget {
     } else {
       examType = ExamType.Future;
     }
-
-    print(examType);
   }
 
   @override
@@ -91,9 +89,7 @@ class ExamCard extends StatelessWidget {
                         size: 17,
                         color: Color(0xff636e72),
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
+                      SizedBox(width: 5),
                       Text(
                         formatDate(
                           exam.startDate,
@@ -106,17 +102,13 @@ class ExamCard extends StatelessWidget {
                           color: Color(0xff636e72),
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      SizedBox(width: 10),
                       Icon(
                         Icons.arrow_forward_rounded,
                         size: 17,
                         color: Color(0xff636e72),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      SizedBox(width: 10),
                       Text(
                         formatDate(
                           exam.endDate,
@@ -133,9 +125,7 @@ class ExamCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Icon(
@@ -143,9 +133,7 @@ class ExamCard extends StatelessWidget {
                     size: 20,
                     color: Color(0xff636e72),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Text(
                     prettyDuration(exam.duration),
                     style: TextStyle(
@@ -167,9 +155,7 @@ class ExamCard extends StatelessWidget {
                     size: 20,
                     color: Color(0xff636e72),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Text(
                     "${exam.questionCount} Questions",
                     style: TextStyle(

@@ -75,7 +75,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
 
   Future<void> initCameras() async {
     _cameras = await availableCameras();
-    debugPrint(_cameras![1].toString());
+    // debugPrint(_cameras![1].toString());
     _cameraController =
         CameraController(_cameras!.first, ResolutionPreset.medium);
 
@@ -132,9 +132,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
         Row(
           children: [
             Icon(Icons.timer),
-            SizedBox(
-              width: 5,
-            ),
+            SizedBox(width: 5),
             ExamTimer(),
           ],
         )
