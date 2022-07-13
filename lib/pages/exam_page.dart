@@ -76,8 +76,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   Future<void> initCameras() async {
     _cameras = await availableCameras();
     // debugPrint(_cameras![1].toString());
-    _cameraController =
-        CameraController(_cameras!.first, ResolutionPreset.medium);
+    _cameraController = CameraController(_cameras![1], ResolutionPreset.medium);
 
     _initializeControllerFuture = _cameraController!.initialize().then((_) {
       if (!mounted) {
@@ -258,11 +257,15 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
     }
   }
 
+  // TODO: Handle no face
   _onAITapped() async {
     if (lastImage == null) return;
 
-    List<Face> faces =
-        await FaceDetectionUtil.detectFromImagePath(lastImage!.path);
+    String path = lastImage!.path;
+
+    List<Face> faces = await FaceDetectionUtil.detectFromImagePath(path);
+
+    debugPrint("Faces -> ${faces.length}");
 
     final bool isCheating = FaceDetectionUtil.detectCheating(faces[0]);
 

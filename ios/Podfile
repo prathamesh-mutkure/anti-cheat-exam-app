@@ -1,10 +1,13 @@
 # Uncomment this line to define a global platform for your project
 platform :ios, '10.0'
 
+use_frameworks!
+
+# pod 'GoogleMLKit/FaceDetection', '3.1.0'
+# pod 'GoogleMLKit/FaceDetection', '2.6.0'
+
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
-
-# use_modular_headers!
 
 project 'Runner', {
   'Debug' => :debug,
@@ -33,13 +36,6 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-#   pod 'Firebase', :modular_headers => true
-#   pod 'FirebaseCoreInternal', :modular_headers => true
-#   pod 'GoogleUtilities', :modular_headers => true
-#   pod 'Firebase/Analytics'
-
-#   pod 'GoogleUtilities-00567490', :modular_headers => true
-
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
@@ -65,3 +61,5 @@ end
 
 # pod 'Firebase/Analytics'
 # pod 'GoogleUtilities', '~> 7.7.0'
+
+

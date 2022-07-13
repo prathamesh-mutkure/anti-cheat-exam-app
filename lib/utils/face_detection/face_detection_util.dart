@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:image/image.dart' as imglib;
+import 'package:path_provider/path_provider.dart';
 
 class FaceDetectionUtil {
   static FaceDetector? faceDetector;
@@ -15,7 +19,9 @@ class FaceDetectionUtil {
 
   static Future<List<Face>> detectFromImagePath(String path) async {
     // GoogleVisionImage visionImage = GoogleVisionImage.fromFilePath(path);
-    final inputImage = InputImage.fromFilePath(path);
+    InputImage inputImage = InputImage.fromFilePath(
+      Platform.isIOS ? await _processImageOnIOS(path) : path,
+    );
 
     final List<Face> faces = await faceDetector!.processImage(inputImage);
 
@@ -51,5 +57,24 @@ class FaceDetectionUtil {
       print('$rotY ----- $rotZ');
       print('-------------------------------');
     }
+  }
+
+  static Future<String> _processImageOnIOS(String path) async {
+    if (Platform.isIOS) {
+      final directory = await getApplicationDocumentsDirectory();
+      final filename = DateTime.now().millisecondsSinceEpoch.toString();
+
+      final imglib.Image capturedImage =
+          imglib.decodeImage(await File(path).readAsBytes())!;
+
+      final imglib.Image orientedImage = imglib.bakeOrientation(capturedImage);
+
+      final imageToBeProcessed = await File('${directory.path}/$filename')
+          .writeAsBytes(imglib.encodeJpg(orientedImage));
+
+      return imageToBeProcessed.path;
+    }
+
+    return path;
   }
 }
