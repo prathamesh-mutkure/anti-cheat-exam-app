@@ -27,12 +27,15 @@ An App that aims to stop cheating in online exams with the power of AI and ML, c
    - The user can answer MCQ-based questions
    - The user can also view their progress
 
-   - ![image](https://user-images.githubusercontent.com/28570857/178106246-58941069-043d-448a-91c1-137f9b074931.png)
+   - ![image](https://user-images.githubusercontent.com/28570857/179022654-f59b6b0c-77d7-48f4-9a55-32813378a696.png)
 
 
 7. AI-powered face motion detector
    - We've used Google's on-device `ml-kit` to track the motion of the user's face.
    - We can check if a user is trying to cheat by monitoring the position of their face
+
+   - ![image](https://user-images.githubusercontent.com/28570857/179022316-45cf8a11-9d5a-411f-b4ce-89d1ea02e478.png)
+
 
 
 ## Tech stack
@@ -52,10 +55,12 @@ An App that aims to stop cheating in online exams with the power of AI and ML, c
 ## Points to remember while testing the app
 
 1. First setup the backend by following instructions in this [repository](https://github.com/prathamesh-mutkure/anti-cheat-app-backend)
-2. When testing on android emulator, if you get a connection error use `http://10.0.2.2:8000/` instead of `localhost`
+2. When testing on android emulator, if you get a connection error use `http://10.0.2.2/` instead of `localhost`
 3. iOS emulator doesn't support camera, this will give an error, use a real device to test AI features.
-4. Allow **permissions** for camera and mic when asked.
-6. Make sure the `BACKEND_URL` is appended with `/api`
+4. On real devices, make sure your PC and mobile are connected to same network, use network IP address instead of `localhost`
+5. Don't forgot the `PORT` number
+6. Allow **permissions** for camera and mic when asked
+7. Make sure the `BACKEND_URL` is appended with `/api`
 
 ## Instructions
 
@@ -81,6 +86,6 @@ An App that aims to stop cheating in online exams with the power of AI and ML, c
 
 ## Need help?
 
-Feel free to contact me on [Twitter](https://twitter.com/Prathamesh_M009/)  or [LinkedIn](https://www.linkedin.com/in/prathamesh-mutkure/), know more about at [prathamesh.co](https://prathamesh.co)
+Feel free to contact me on [Twitter](https://twitter.com/Prathamesh_M009/)  or [LinkedIn](https://www.linkedin.com/in/prathamesh-mutkure/), know more about me at [prathamesh.co](https://prathamesh.co)
 
 [![Twitter](https://img.shields.io/badge/Twitter-follow-blue.svg?logo=twitter&logoColor=white)](https://twitter.com/Prathamesh_M009/) [![Instagram](https://img.shields.io/badge/Instagram-follow-purple.svg?logo=instagram&logoColor=white)](https://www.instagram.com/prathamesh_mutkure/) 
