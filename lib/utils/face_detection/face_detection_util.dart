@@ -1,8 +1,15 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:image/image.dart' as imglib;
 import 'package:path_provider/path_provider.dart';
+
+enum CheatingStatus {
+  Detected,
+  NotDetected,
+  NoFace,
+}
 
 class FaceDetectionUtil {
   static FaceDetector? faceDetector;
@@ -18,17 +25,24 @@ class FaceDetectionUtil {
   }
 
   static Future<List<Face>> detectFromImagePath(String path) async {
-    // GoogleVisionImage visionImage = GoogleVisionImage.fromFilePath(path);
     InputImage inputImage = InputImage.fromFilePath(
       Platform.isIOS ? await _processImageOnIOS(path) : path,
     );
 
-    final List<Face> faces = await faceDetector!.processImage(inputImage);
+    try {
+      final List<Face> faces = await faceDetector!.processImage(inputImage);
 
-    return faces;
+      return faces;
+    } catch (e) {
+      debugPrint("Error detecting faces: $e");
+
+      return [];
+    }
   }
 
-  static bool detectCheating(Face face) {
+  static CheatingStatus detectCheating(Face? face) {
+    if (face == null) return CheatingStatus.NoFace;
+
     final double? rotY =
         face.headEulerAngleY; // Head is rotated to the right rotY degrees
 
@@ -38,11 +52,11 @@ class FaceDetectionUtil {
     if (rotY! > 30 || rotY < -30) {
       print("CHEATING");
       print('**************************');
-      return true;
+      return CheatingStatus.Detected;
     } else {
       print("NOT CHEATING");
       print('**************************');
-      return false;
+      return CheatingStatus.NotDetected;
     }
   }
 

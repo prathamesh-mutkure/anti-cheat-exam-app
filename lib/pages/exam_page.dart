@@ -74,16 +74,23 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   }
 
   Future<void> initCameras() async {
-    _cameras = await availableCameras();
-    // debugPrint(_cameras![1].toString());
-    _cameraController = CameraController(_cameras![1], ResolutionPreset.medium);
+    try {
+      _cameras = await availableCameras();
+      _cameraController =
+          CameraController(_cameras![1], ResolutionPreset.medium);
 
-    _initializeControllerFuture = _cameraController!.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
+      _initializeControllerFuture = _cameraController!.initialize().then((_) {
+        if (!mounted) {
+          return;
+        }
+        setState(() {});
+      });
+    } catch (e) {
+      debugPrint("Failed to initialize camera: $e");
+      AppUtils.showToast(
+        "Failed to initialize cameras, please make sure to give necessary permissions",
+      );
+    }
   }
 
   @override
@@ -257,22 +264,24 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
     }
   }
 
-  // TODO: Handle no face
   _onAITapped() async {
-    if (lastImage == null) return;
+    if (lastImage == null) {
+      AppUtils.showToast("Failed to capture image");
+      return;
+    }
 
     String path = lastImage!.path;
-
     List<Face> faces = await FaceDetectionUtil.detectFromImagePath(path);
 
-    debugPrint("Faces -> ${faces.length}");
+    final CheatingStatus cheatingStatus =
+        FaceDetectionUtil.detectCheating(faces.length > 0 ? faces[0] : null);
 
-    final bool isCheating = FaceDetectionUtil.detectCheating(faces[0]);
-
-    if (isCheating) {
+    if (cheatingStatus == CheatingStatus.Detected) {
       AppUtils.showToast("CHEATING DETECTED");
-    } else {
+    } else if (cheatingStatus == CheatingStatus.NotDetected) {
       AppUtils.showToast("NO CHEATING DETECTED");
+    } else {
+      AppUtils.showToast("Failed to detect face");
     }
   }
 }
