@@ -24,7 +24,7 @@ class ExamTimer extends StatelessWidget {
             ),
           );
         },
-        controller: context.read<ExamStore>().countdownController,
+        controller: context.watch<ExamStore>().countdownController,
       ),
     );
   }

@@ -61,4 +61,7 @@ class Exam {
       status: json?['status'],
     );
   }
+
+  // TODO: Implement toJson()
+  Map<String, dynamic> toJson() => {};
 }

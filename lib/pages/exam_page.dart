@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/utils/app/app_utils.dart';
@@ -47,6 +45,7 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     _cameraController!.dispose();
     FaceDetectionUtil.close();
+    _countdownController?.start();
     super.dispose();
   }
 
@@ -78,6 +77,8 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
       _cameras = await availableCameras();
       _cameraController =
           CameraController(_cameras![1], ResolutionPreset.medium);
+
+      _cameraController?.setFlashMode(FlashMode.off);
 
       _initializeControllerFuture = _cameraController!.initialize().then((_) {
         if (!mounted) {
@@ -235,8 +236,9 @@ class _ExamPageState extends State<ExamPage> with WidgetsBindingObserver {
   _buildImage() {
     return Container(
       padding: EdgeInsets.all(6),
-      child:
-          lastImage != null ? Image.file(File(lastImage!.path)) : Container(),
+      // child:
+      //     lastImage != null ? Image.file(File(lastImage!.path)) : Container(),
+      child: Container(),
     );
   }
 

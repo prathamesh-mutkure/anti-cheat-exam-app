@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Question {
   final String title;
   final Map<String, dynamic> options;
@@ -37,4 +39,10 @@ class Question {
       options: json['options'],
     );
   }
+
+  // TODO: Test toJson Method
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'options': jsonEncode(options),
+      };
 }
