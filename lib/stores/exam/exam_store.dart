@@ -42,10 +42,15 @@ abstract class _ExamStore with Store {
   bool get isLastQuestion => currentQuestionNo == totalQuestions! - 1;
 
   @action
-  startExam(String examId, BuildContext context) async {
+  startExam(
+    String examId,
+    String studentId,
+    String token,
+    BuildContext context,
+  ) async {
     AppUtils.showLoading("Starting Exam..");
 
-    _currentExam = await ExamApi.getExam(examId);
+    _currentExam = await ExamApi.getExam(examId, studentId, token);
     totalQuestions = _currentExam?.questions!.length;
     answers = ObservableList();
     answers!.length = totalQuestions!;
@@ -60,13 +65,14 @@ abstract class _ExamStore with Store {
   }
 
   @action
-  endExam(BuildContext context, String studentId) async {
+  endExam(BuildContext context, String studentId, String token) async {
     try {
       AppUtils.showLoading("Submitting Exam...");
       bool submitted = await ExamApi.submitExam(
         studentId,
         _currentExam!.id,
         answers!.toList(),
+        token,
       );
 
       if (submitted) {
@@ -80,7 +86,7 @@ abstract class _ExamStore with Store {
           currentQuestionNo = 0;
         });
         AppUtils.dismissLoading();
-        context.read<AssignedExamStore>().getAssignedExams(studentId);
+        context.read<AssignedExamStore>().getAssignedExams(studentId, token);
       }
     } catch (e) {
       print(e);

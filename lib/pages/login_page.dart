@@ -41,8 +41,12 @@ class _LoginPageState extends State<LoginPage> {
         _idController.text,
         _passwordController.text,
       );
+
       context.read<StudentStore>().login(student);
-      context.read<AssignedExamStore>().getAssignedExams(student.id);
+      context
+          .read<AssignedExamStore>()
+          .getAssignedExams(student.id, student.token);
+
       AppUtils.dismissLoading();
       Navigator.pushReplacementNamed(context, Routes.home);
     } catch (e) {

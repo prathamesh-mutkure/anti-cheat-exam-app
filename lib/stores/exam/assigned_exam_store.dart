@@ -8,14 +8,16 @@ part 'assigned_exam_store.g.dart';
 class AssignedExamStore = _AssignedExamStore with _$AssignedExamStore;
 
 abstract class _AssignedExamStore with Store {
+  @observable
   ObservableList<Exam> assignedExams = ObservableList();
 
   @action
-  getAssignedExams(String studentId) async {
+  getAssignedExams(String studentId, String token) async {
     assignedExams.removeWhere((element) => true);
+
     try {
       AppUtils.showLoading("Loading Exams...");
-      List<Exam> exams = await ExamApi.getAssignedExams(studentId);
+      List<Exam> exams = await ExamApi.getAssignedExams(studentId, token);
       assignedExams.addAll(exams);
     } catch (e) {
       AppUtils.showToast(e.toString() + ", Please try again later");

@@ -6,7 +6,7 @@ part of 'exam_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ExamStore on _ExamStore, Store {
   Computed<Question?>? _$currentQuestionComputed;
@@ -24,7 +24,8 @@ mixin _$ExamStore on _ExamStore, Store {
               name: '_ExamStore.isLastQuestion'))
           .value;
 
-  final _$_currentExamAtom = Atom(name: '_ExamStore._currentExam');
+  late final _$_currentExamAtom =
+      Atom(name: '_ExamStore._currentExam', context: context);
 
   @override
   Exam? get _currentExam {
@@ -39,7 +40,8 @@ mixin _$ExamStore on _ExamStore, Store {
     });
   }
 
-  final _$currentQuestionNoAtom = Atom(name: '_ExamStore.currentQuestionNo');
+  late final _$currentQuestionNoAtom =
+      Atom(name: '_ExamStore.currentQuestionNo', context: context);
 
   @override
   int get currentQuestionNo {
@@ -54,7 +56,7 @@ mixin _$ExamStore on _ExamStore, Store {
     });
   }
 
-  final _$answersAtom = Atom(name: '_ExamStore.answers');
+  late final _$answersAtom = Atom(name: '_ExamStore.answers', context: context);
 
   @override
   ObservableList<String?>? get answers {
@@ -69,21 +71,27 @@ mixin _$ExamStore on _ExamStore, Store {
     });
   }
 
-  final _$startExamAsyncAction = AsyncAction('_ExamStore.startExam');
+  late final _$startExamAsyncAction =
+      AsyncAction('_ExamStore.startExam', context: context);
 
   @override
-  Future startExam(String examId, BuildContext context) {
-    return _$startExamAsyncAction.run(() => super.startExam(examId, context));
+  Future startExam(
+      String examId, String studentId, String token, BuildContext context) {
+    return _$startExamAsyncAction
+        .run(() => super.startExam(examId, studentId, token, context));
   }
 
-  final _$endExamAsyncAction = AsyncAction('_ExamStore.endExam');
+  late final _$endExamAsyncAction =
+      AsyncAction('_ExamStore.endExam', context: context);
 
   @override
-  Future endExam(BuildContext context, String studentId) {
-    return _$endExamAsyncAction.run(() => super.endExam(context, studentId));
+  Future endExam(BuildContext context, String studentId, String token) {
+    return _$endExamAsyncAction
+        .run(() => super.endExam(context, studentId, token));
   }
 
-  final _$_ExamStoreActionController = ActionController(name: '_ExamStore');
+  late final _$_ExamStoreActionController =
+      ActionController(name: '_ExamStore', context: context);
 
   @override
   dynamic goToNextQuestion() {

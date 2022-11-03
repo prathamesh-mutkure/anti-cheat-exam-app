@@ -1,3 +1,4 @@
+import 'package:anti_cheat_exam_app/models/student/Student.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
 import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:anti_cheat_exam_app/widgets/exam/exam_buttons.dart';
@@ -45,9 +46,11 @@ class ExamNavigationButtons extends StatelessWidget {
                       );
 
                       if (confirmEnd) {
-                        String studentId =
-                            context.read<StudentStore>().currentStudent!.id;
-                        context.read<ExamStore>().endExam(context, studentId);
+                        Student student =
+                            context.read<StudentStore>().currentStudent!;
+                        context
+                            .read<ExamStore>()
+                            .endExam(context, student.id, student.token);
                       }
                     },
                   )

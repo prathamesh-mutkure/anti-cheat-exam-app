@@ -1,5 +1,7 @@
 import 'package:anti_cheat_exam_app/models/exam/Exam.dart';
+import 'package:anti_cheat_exam_app/models/student/Student.dart';
 import 'package:anti_cheat_exam_app/stores/exam/exam_store.dart';
+import 'package:anti_cheat_exam_app/stores/student/student_store.dart';
 import 'package:date_format/date_format.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,15 @@ class ExamCard extends StatelessWidget {
   });
 
   onStartExamTapped(BuildContext context) async {
-    await context.read<ExamStore>().startExam(exam.id, context);
+    Student? currentStudent = context.read<StudentStore>().currentStudent;
+
+    if (currentStudent == null) {
+      return;
+    }
+
+    await context
+        .read<ExamStore>()
+        .startExam(exam.id, currentStudent.id, currentStudent.token, context);
   }
 
   detectDate() {
