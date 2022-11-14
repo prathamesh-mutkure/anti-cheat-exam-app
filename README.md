@@ -2,10 +2,13 @@
 
 
 
+
 # Anti-Cheat Exam App  🌟
 
 
 An App that aims to stop cheating in online exams with the power of AI and ML, co-created with [Samyak Sukhdeve](https://github.com/SamyakSukhdeve)
+
+We also have a web version of the app with more features and better features, check that project [here](https://github.com/prathamesh-mutkure/anti-cheat-app-web)
 
 <p align="center">  
 <img src="https://user-images.githubusercontent.com/28570857/178106216-25d91b1c-06cf-42fa-85fc-cf3540868b1f.png"/>  
@@ -17,6 +20,7 @@ An App that aims to stop cheating in online exams with the power of AI and ML, c
 
 1. Login Page
    - Login with the provided user id and password
+   - Powered by JWT tokens
 
 2. Home page
    - Shows all the exams assigned to the user
@@ -42,12 +46,19 @@ An App that aims to stop cheating in online exams with the power of AI and ML, c
 
 #### Frontend
 - Flutter
-
+- MobX + Provider
 
 #### Backend
 - Nodejs
 - Express
 - MongoDB
+
+#### Frontend
+
+- Next.js (React)
+- TypeScript
+- Redux
+
 
 #### Other Tools
 - Google's on-device ML Kit
@@ -80,12 +91,17 @@ An App that aims to stop cheating in online exams with the power of AI and ML, c
 
 ## Useful Links
 
+
+- [Project Demo](https://anti-cheat-exam-app.vercel.app/) for Web version
+- [Mobile App](https://github.com/prathamesh-mutkure/anti-cheat-exam-app) (Android & iOS)
+
 - [Backend Repository](https://github.com/prathamesh-mutkure/anti-cheat-app-backend)
-- [Project Thesis](https://drive.google.com/file/d/1fXXXjcE74pIOEwavstTmporuOECc7cUu/view)  (Submited in diploma)
+
+- [Project Thesis](https://drive.google.com/file/d/1fXXXjcE74pIOEwavstTmporuOECc7cUu/view) (Submitted mobile app as final year project for my diploma)
 
 
 ## Need help?
 
-Feel free to contact me on [Twitter](https://twitter.com/Prathamesh_M009/)  or [LinkedIn](https://www.linkedin.com/in/prathamesh-mutkure/), know more about me at [prathamesh.co](https://prathamesh.co)
+Feel free to contact me on [Twitter](https://twitter.com/prathamesh_io/) or [LinkedIn](https://www.linkedin.com/in/prathamesh-mutkure/), know more about me at [prathamesh.co](https://prathamesh.co)
 
-[![Twitter](https://img.shields.io/badge/Twitter-follow-blue.svg?logo=twitter&logoColor=white)](https://twitter.com/Prathamesh_M009/) [![Instagram](https://img.shields.io/badge/Instagram-follow-purple.svg?logo=instagram&logoColor=white)](https://www.instagram.com/prathamesh_mutkure/) 
+[![Twitter](https://img.shields.io/badge/Twitter-follow-blue.svg?logo=twitter&logoColor=white)](https://twitter.com/prathamesh_io/) [![Instagram](https://img.shields.io/badge/Instagram-follow-purple.svg?logo=instagram&logoColor=white)](https://www.instagram.com/prathamesh_mutkure/) 
